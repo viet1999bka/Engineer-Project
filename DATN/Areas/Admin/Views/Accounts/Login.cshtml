@@ -1,0 +1,87 @@
+﻿@model DATN.ModelView.LoginViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="~/Adminassets/fonts/login/style.css" rel="stylesheet" />
+
+    <link href="~/Adminassets/css/login/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link href="~/Adminassets/css/login/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Style -->
+    <link href="~/Adminassets/css/login/style.css" rel="stylesheet" />
+
+    <title>Quản trị viên</title>
+</head>
+<body>
+
+
+
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="~/Adminassets/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
+                </div>
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <h3>Đăng nhập</h3>
+                                <p class="mb-4">Trang đăng nhập tài khoản dành cho quản trị viên.</p>
+                            </div>
+                            <form asp-action="Login" asp-controller="Accounts" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group first">
+                                    <label for="username">Email</label>
+                                    <input asp-for="UserName" type="email" class="form-control" id="username">
+                                    <span class="js-errorEmail" style="color:red;">@TempData["errorEmail"]</span>
+                                    <span asp-validation-for="UserName"></span>
+                                </div>
+                                <div class="form-group last mb-4">
+                                    <label for="password">Password</label>
+                                    <input asp-for="Password" type="password" class="form-control" id="password">
+                                    <span class="js-errorPass" style="color: red; margin-top: 8px; display: inline-block;">@TempData["errorPass"]</span>
+                                    <span asp-validation-for="Password"></span>
+                                </div>
+
+                                <div class="d-flex mb-5 align-items-center">
+                                    <label class="control control--checkbox mb-0">
+                                        <span class="caption">Remember me</span>
+                                        <input type="checkbox" checked="checked" />
+                                        <div class="control__indicator"></div>
+                                    </label>
+                                    <span class="ml-auto"><a class="forgot-pass">Forgot Password</a></span>
+                                </div>
+
+                                <input type="submit" value="Log In" class="btn btn-block btn-primary">
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Adminassets/js/login/bootstrap.min.js"></script>
+    <script src="~/Adminassets/js/login/jquery-3.3.1.min.js"></script>
+    <script src="~/Adminassets/js/login/main.js"></script>
+    <script src="~/Adminassets/js/login/popper.min.js"></script>
+</body>
+</html>

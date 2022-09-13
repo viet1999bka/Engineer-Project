@@ -1,0 +1,29 @@
+﻿@model List<Language>
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.LanguageId
+            </td>
+            <td>
+                @item.LanguageName
+            </td>
+            <td>
+                @item.LạnguageDisplay
+            </td>
+            <td>
+                @item.LanguageExten
+            </td>
+            <td>
+                @item.LanguageMode
+            </td>
+            <td>
+                <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.LanguageId">Edit</a> |
+                <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-id="@item.LanguageId">Details</a> |
+                <a class="btn btn-inverse-danger btn-md" asp-action="Delete" asp-route-id="@item.LanguageId">Delete</a>
+            </td>
+        </tr>
+    }
+}

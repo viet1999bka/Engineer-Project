@@ -1,0 +1,179 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<DATN.Models.LanguageSupport>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Quản lý danh sách ngôn ngữ được hỗ trợ với mỗi bài tập</h1>
+<br />
+<p>
+    <a class="btn btn-inverse-primary btn-md" asp-action="Create" asp-route-ExerciseId="@ViewBag.CurrentExerciseId">Create New</a>
+</p>
+<br />
+
+<div class="row">
+    <div class="col-3">
+        <input type="text" class="form-control" id="nameLanguage" name="nameEmail" placeholder="Tìm kiếm ngôn ngữ theo tên">
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-lg-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" style="max-width: 1160px;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Challenge
+                                </th>
+                                <th>
+                                    Tên bài tập
+                                </th>
+                                <th>
+                                    Tên ngôn ngữ
+                                </th>
+                                <th>
+                                    File Main
+                                </th>
+                                <th>
+                                    File Function
+                                </th>
+                                <th>
+                                    Mô tả
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb-exercise-index">
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.LanguageSupId
+                                        </td>
+                                        <td>
+                                            @item.Exercise.Challenge.ChallengeName
+                                        </td>
+                                        <td>
+                                            @item.Exercise.ExcerciseName
+                                        </td>
+                                        <td>
+                                            @item.Language.LanguageName
+                                        </td>
+                                        <td style="white-space: normal;">
+                                            @item.FileMain
+                                        </td>
+                                        <td style="white-space: normal;">
+                                            @item.FileFunction
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.LanguageSupId">Edit</a> |
+                                            <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-id="@item.LanguageSupId">Details</a> |
+                                            <a class="btn btn-inverse-danger btn-md" asp-action="Delete" asp-route-id="@item.LanguageSupId">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<br />
+
+
+
+@section Script {
+    <script>
+        $(document).ready(function () {
+
+            ////Lọc khi thay đổi thử thách
+            //jQuery('#idchallenge').change(function () {
+            //    var challengeId = jQuery(this).children(":selected").attr("value");
+            //    challengeId = parseFloat(challengeId);
+
+            //    $('#idchallenge option')
+            //        .removeAttr('selected');
+            //    $("#idchallenge > [value=" + challengeId + "]").attr("selected", "true");
+
+            //    $.ajax({
+            //        url: '/Admin/LanguageSupports/Filtter',
+            //        datatype: "json",
+            //        type: "GET",
+            //        data: {
+            //            ChallengeId: challengeId
+            //        },
+            //        async: true,
+            //        success: function (results) {
+            //            if (results.status == "success") {
+            //                window.location.href = results.redirectUrl;
+            //            }
+            //        },
+            //        error: function (xhr) {
+            //            alert("error");
+            //        }
+            //    });
+            //});
+
+
+            ////Tìm kiếm theo tên bài tập
+            //$("#nameExercise").keyup(function () {
+            //    var strnameLangugae = $('#nameLanguage').val();
+            //    var strnameExercise = $('#nameExercise').val();
+            //    var challengeId = jQuery('#idchallenge').children(":selected").attr("value");
+            //    challengeId = parseFloat(challengeId);
+            //    $.ajax({
+            //        url: '/Admin/Search/FindLanguageSupport/',
+            //        datatype: "json",
+            //        type: "POST",
+            //        data: { nameLangugae: strnameLangugae, nameExercise: strnameExercise, ChallengeId: challengeId },
+            //        async: true,
+            //        success: function (results) {
+            //            $("#tb-exercise-index").html("");
+            //            $("#tb-exercise-index").html(results);
+            //        },
+            //        error: function (xhr) {
+            //            alert('error');
+            //        }
+            //    });
+            //});
+
+            //Tìm kiếm theo tên ngôn ngữ
+            $("#nameLanguage").keyup(function () {
+                var strnameLangugae = $('#nameLanguage').val();
+                var exerciseId = @Html.Raw(Json.Serialize(ViewBag.CurrentExerciseId));
+                exerciseId = parseFloat(exerciseId);
+                $.ajax({
+                    url: '/Admin/Search/FindLanguageSupport/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { nameLangugae: strnameLangugae, ExerciseId: exerciseId },
+                    async: true,
+                    success: function (results) {
+                        $("#tb-exercise-index").html("");
+                        $("#tb-exercise-index").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,129 @@
+﻿@model DATN.Models.Account
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Chỉnh sửa thông tin</h1>
+
+<h4>Tài khoản Quản trị</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Form tạo mới</h4>
+
+                <form id="form" class="forms-sample" asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="AccountId" />
+                    <div style="display:flex; flex-direction:row;">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="Email" class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="text" style="color:#000" required="required" disabled asp-for="Email" class="form-control" placeholder="Email">
+                                    <span asp-validation-for="Email" class="text-danger">@TempData["errorEmail"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Password" class="col-sm-3 col-form-label">Mật khẩu</label>
+                                <div class="col-sm-9">
+                                    <input type="password" style="color:#000" id="password" disabled asp-for="Password" class="form-control" placeholder="*********" required />
+                                    <span asp-validation-for="Password" class="text-danger">@TempData["errorPass"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="FullName" class="col-sm-3 col-form-label">Họ và tên</label>
+                                <div class="col-sm-9">
+                                    <input asp-for="FullName" class="form-control" placeholder="Họ và tên" />
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Phone" class="col-sm-3 col-form-label">Phone</label>
+                                <div class="col-sm-9">
+                                    <input type="tel" asp-for="Phone" class="form-control" placeholder="Số điện thoại" required />
+                                    <span asp-validation-for="Phone" class="text-danger">@TempData["errorPhone"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Address" class="col-sm-3 col-form-label">Địa chỉ</label>
+                                <div class="col-sm-9">
+                                    <input asp-for="Address" class="form-control" placeholder="Địa chỉ" />
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="BirthDay" class="col-sm-3 col-form-label">Ngày sinh</label>
+                                <div class="col-sm-9">
+                                    <input type="date" asp-for="BirthDay" class="form-control" placeholder="Ngày sinh" />
+                                    <span asp-validation-for="BirthDay" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="RoleId" class="col-sm-3 col-form-label">Vai trò</label>
+                                <div class="col-sm-9">
+                                    <select value ="@Model.RoleId" class="form-control form-control-sm" asp-for="RoleId" asp-items="ViewBag.Role"  style="width: 100%;">
+                                    </select>
+                                    <span asp-validation-for="RoleId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row" style="display: flex; flex-direction:column; align-items:center;">
+                                <img id="display_image" class="avatar-upload" src="~/images/AccountAvatars/@Model.Avatar.Trim()" />
+                                <br />
+                                <button type="button" class="btn btn-secondary btn-fw" onclick="removeAvatar()">Xóa ảnh</button>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Avatar" class="col-sm-3 col-form-label">Ảnh đại diện</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" name="fAvatar" id="fAvatar" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input id="btnsubmit" type="submit" class="btn btn-primary me-2" value="Lưu"></input>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a class="btn btn-warning" asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    const image_input = document.querySelector('#fAvatar');
+    const display_image = document.getElementById('display_image');
+
+    image_input.addEventListener("change", function () {
+        changeImage(this);
+    });
+
+    function changeImage(input) {
+        var reader;
+
+        if (input.files && input.files[0]) {
+            reader = new FileReader();
+
+            reader.onload = function (e) {
+                display_image.setAttribute('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+
+
+    }
+
+    function removeAvatar() {
+        image_input.value = null;
+        display_image.setAttribute('src', "../../images/AccountAvatars/default-avatar.png");
+    }
+</script>

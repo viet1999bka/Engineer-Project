@@ -1,0 +1,213 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<DATN.Models.Exercise>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Quản lý danh sách bài tập</h1>
+<br />
+<p>
+    <a class="btn btn-inverse-primary btn-md" asp-action="Create">Create New</a>
+</p>
+<br />
+
+<div class="row">
+    <div class="col-2">
+        <select class="custom-select" id="idLevel" name="idLevel" style="min-width:180px;" required asp-items="ViewBag.difficult">
+            <option disabled selected>Chọn level</option>
+            <option value="0">Tất cả</option>
+
+        </select>
+    </div>
+    <div class="col-2">
+        <select class="custom-select" id="txtChallengeId" name="txtChallengeId" style="min-width:180px;" required asp-items="ViewBag.challenge">
+            <option disabled selected>Chọn challenge</option>
+            <option value="0">Tất cả</option>
+
+        </select>
+    </div>
+    <div class="col-3">
+        <input type="text" class="form-control" id="nameEmail" name="nameEmail" placeholder="Tìm kiếm exercise theo tên">
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-lg-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" style="max-width: 1160px;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Challenge
+                                </th>
+                                <th>
+                                    Tên
+                                </th>
+                                <th>
+                                    Độ khó
+                                </th>
+                                <th>
+                                    Mô tả
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb-exercise-index">
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.ExcerciseId
+                                        </td>
+                                        <td>
+                                            @item.Challenge.ChallengeName
+                                        </td>
+                                        <td>
+                                            @item.ExcerciseName
+                                        </td>
+                                        <td>
+                                            @item.Level.DifficultName
+                                        </td>
+                                        <td style="white-space: normal;">
+                                            @item.Description
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.ExcerciseId">Edit</a> |
+                                            <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-id="@item.ExcerciseId">Details</a> |
+                                            <a class="btn btn-inverse-danger btn-md" asp-action="Delete" asp-route-id="@item.ExcerciseId">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="row">
+    <div class="col-lg-12 stretch-card">
+        <div aria-label="Page navigation example">
+            <ul class="pagination">
+                <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="Exercises" asp-action="Index" />
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+@section Script {
+    <script>
+        $(document).ready(function () {
+
+            //Lọc khi thay đổi thử thách
+            jQuery('#txtChallengeId').change(function () {
+                var challengeId = jQuery(this).children(":selected").attr("value");
+                challengeId = parseFloat(challengeId);
+                var levelId = jQuery('#idLevel').children(":selected").attr("value");
+                levelId = parseFloat(levelId);
+
+                $('#txtChallengeId option')
+                    .removeAttr('selected');
+                $("#txtChallengeId > [value=" + challengeId + "]").attr("selected", "true");
+
+                $('#idLevel option')
+                    .removeAttr('selected');
+                $("#idLevel > [value=" + levelId + "]").attr("selected", "true");
+
+                $.ajax({
+                    url: '/Admin/Exercises/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        ChallengeId: challengeId,
+                        LevelId: levelId
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert("error");
+                    }
+                });
+            });
+
+            //Lọc khi thay đổi độ khó
+            jQuery('#idLevel').change(function () {
+                var levelId = jQuery(this).children(":selected").attr("value");
+                levelId = parseFloat(levelId);
+                var challengeId = jQuery('#txtChallengeId').children(":selected").attr("value");
+                challengeId = parseFloat(challengeId);
+
+                $('#txtChallengeId option')
+                    .removeAttr('selected');
+                $("#txtChallengeId > [value=" + challengeId + "]").attr("selected", "true");
+
+                $('#idLevel option')
+                    .removeAttr('selected');
+                $("#idLevel > [value=" + levelId + "]").attr("selected", "true");
+
+                $.ajax({
+                    url: '/Admin/Exercises/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        ChallengeId: challengeId,
+                        LevelId: levelId
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert("error");
+                    }
+                });
+            });
+
+            //Tìm kiếm theo tên
+            $("#nameEmail").keyup(function () {
+                var strkeyword = $('#nameEmail').val();
+                var levelId = jQuery('#idLevel').children(":selected").attr("value");
+                levelId = parseFloat(levelId);
+                var challengeId = jQuery('#txtChallengeId').children(":selected").attr("value");
+                challengeId = parseFloat(challengeId);
+                $.ajax({
+                    url: '/Admin/Search/FindExercise/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword, ChallengeId: challengeId, LevelId: levelId },
+                    async: true,
+                    success: function (results) {
+                        $("#tb-exercise-index").html("");
+                        $("#tb-exercise-index").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}
+

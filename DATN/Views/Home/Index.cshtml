@@ -1,0 +1,266 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUST</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/asset/css/base.css">
+    <link rel="stylesheet" href="~/asset/css/main.css">
+    <link rel="stylesheet" href="~/asset/font/fontawesome-free-6.1.1-web/css/all.min.css">
+</head>
+<body>
+    <div class="page__layout">
+        <div class="page__header">
+            <div class="page__header-nav">
+                <div class="page__header-home">
+                    <a href="" class="header__navbar-home-link">
+                        <i class="fa-brands fa-connectdevelop header__navbar-home-icon"></i>
+                        HUST
+                    </a>
+                </div>
+                <ul class="page__header-list">
+                    <li class="page__header-item">About Us</li>
+                    <li class="page__header-item js-login">
+                        <a style="color: inherit;" asp-controller="Accounts" asp-action="Login">Login</a>
+                    </li>
+                    <li class="page__header-item js-register">
+                        <a style="color: inherit;" asp-controller="Accounts" asp-action="DangKyTaiKhoan">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="page__introduce">
+            <div class="page__introduce-content">
+                <div class="page__introduce-infor">
+                    <p class="page__introduce-title">
+                        Leading companies trust CodeSignal’s
+                    </p>
+                    <h1 class="page__introduce-heading">
+                        Technical introduce and Assessment Solutions
+                    </h1>
+                    <h2 class="page__introduce-details">
+                        Reduce bias, save engineering time, and improve the candidate experience to find and hire the best technical talent, faster.
+                    </h2>
+                </div>
+                <div class="page__introduce-desc">
+                    <img class="page__introduce-img" src="~/asset/image/Desktop-2-pkjmrd0vmznq5zuheb5yqxpz54ojyu785i1lxrlywy.webp" alt="">
+                    <img class="page__introduce-img" src="~/asset/image/Desktop-1-pkjmrd0vmznq5zuheb5yqxpz54ojyu785i1lxrlz3c.webp" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="page__interview">
+            <div class="page__interview-content">
+                <div class="page__interview-infor">
+                    <div class="page__interview-header">
+                        <i class="fa-solid fa-comments"></i>
+                        <h3 class="page__interview-header-title">Interview</h3>
+                    </div>
+                    <p class="page__interview-comment">CodeSignal Interview is a best-in-class solution for live technical interviews in a collaborative and realistic coding environment.</p>
+                    <li class="page__interview-comment">Measure everything from algorithmic fundamentals to full-stack application development.</li>
+                    <li class="page__interview-comment">Meet, talk, and code collaboratively with candidates with built-in video and audio calling.</li>
+                </div>
+
+                <div class="page__interview-desc">
+                    <img src="~/asset/image/Video-calling-within-CodeSignal-Interview-1-1-pkjmrdypttp0hlt48tklbfhfqijx6jayhmp3f1kl88.webp" alt="" class="">
+                </div>
+            </div>
+        </div>
+        <div class="page__about" id="about">
+            <div class="page__about-content">
+                <div class="page__about-list">
+                    <h2 class="page__about-heading">
+                        Products
+                    </h2>
+                    <span class="page__about-item">
+                        Tech Screen
+                    </span>
+                    <span class="page__about-item">
+                        Pre-Screen
+                    </span>
+                    <span class="page__about-item">
+                        Interview
+                    </span>
+                    <span class="page__about-item">
+                        IDE
+                    </span>
+                </div>
+                <div class="page__about-list">
+                    <h2 class="page__about-heading">
+                        Solutions
+                    </h2>
+                    <span class="page__about-item">
+                        Hypergrowth Teams
+                    </span>
+                    <span class="page__about-item">
+                        University Recruiting
+                    </span>
+                    <span class="page__about-item">
+                        Engineering Leader
+                    </span>
+                </div>
+                <div class="page__about-list">
+                    <h2 class="page__about-heading">
+                        Resources
+                    </h2>
+                    <span class="page__about-item">
+                        Customer Case Studies
+                    </span>
+                    <span class="page__about-item">
+                        Resources Library
+                    </span>
+                    <span class="page__about-item">
+                        Recruiting Blog
+                    </span>
+                    <span class="page__about-item">
+                        Engineering Blog
+                    </span>
+                </div>
+                <div class="page__about-list">
+                    <h2 class="page__about-heading">
+                        Contact us
+                    </h2>
+                    <span class="page__about-item">
+                        viet@gmail.com
+                    </span>
+                    <span class="page__about-item">
+                        viet.pt173466@sis.hust.edu.vn
+                    </span>
+                    <span class="page__about-social">
+                        <a href="" class="page__about-link">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="" class="page__about-link">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="" class="page__about-link">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                        <a href="" class="page__about-link">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="page__footer">
+            <div class="page__footer-content">
+                <div class="page__footer-coppyright">
+                    Copyright © 2022 CodeSignal, Inc. All rights reserved
+                </div>
+                <div class="flex1"></div>
+                <div class="page__footer-nav">
+                    <a href="" class="page__footer-item">Privacy</a>
+                    <a href="" class="page__footer-item">Terms</a>
+                    <a href="" class="page__footer-item">Sitemap</a>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal">
+            <div class="modal__overlay js-modal__overlay"></div>
+            <div class="modal__body">
+                <!-- Authen form register-->
+                <div class="auth-form auth-form__register">
+                    <div class="auth-form__container">
+                        <div class="auth-form__header">
+                            <h3 class="auth-form__heading">Đăng ký</h3>
+                            <span class="auth-form__switch-btn js-login-switch">Đăng nhập</span>
+                        </div>
+
+                        <div class="auth-form__form">
+                            <div class="auth-form__group">
+                                <input type="text" class="auth-form__input" placeholder="Email">
+                            </div>
+                            <div class="auth-form__group">
+                                <input type="password" class="auth-form__input" placeholder="Mật khẩu">
+                            </div>
+                            <div class="auth-form__group">
+                                <input type="password" class="auth-form__input" placeholder="Nhập lại mật khẩu">
+                            </div>
+                        </div>
+
+                        <div class="auth-form__aside">
+                            <p class="auth-form__policy-text">Bằng việc đăng ký, bạn đã đồng ý với chúng tôi về </p>
+                            <a href="" class="auth-form__policy-link">Điều khoản và dịch vụ</a> &
+                            <a href="" class="auth-form__policy-link">Chính sách bảo mật</a>
+                        </div>
+
+                        <div class="auth-form__control">
+                            <button class="btn auth-form__control-back">Trở Lại</button>
+                            <button class="btn btn--primary">Đăng ký</button>
+                        </div>
+
+                        <div class="auth-form__social">
+                            <a href="" class="btn btn--with-icon auth-form__social--facebook">
+                                <i class="fab fa-facebook-square auth-form__social-icon"></i>
+                                Kết nối với Facebook
+                            </a>
+                            <a href="" class="btn btn--with-icon auth-form__social--google">
+                                <i class="fab fa-google auth-form__social-icon auth-form__social-icon--google"></i>
+                                Kết nối với Google
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authen form login-->
+                <div class="auth-form auth-form__login">
+                    <div class="auth-form__container">
+                        <div class="auth-form__header">
+                            <h3 class="auth-form__heading">Đăng nhập</h3>
+                            <span class="auth-form__switch-btn js-register-switch">Đăng ký</span>
+                        </div>
+
+                        <div class="auth-form__form">
+                            <div class="auth-form__group">
+                                <input type="text" class="auth-form__input" placeholder="Email">
+                            </div>
+                            <div class="auth-form__group">
+                                <input type="password" class="auth-form__input" placeholder="Mật khẩu">
+                            </div>
+                        </div>
+
+                        <div class="auth-form__aside">
+                            <div class="auth-form__help">
+                                <a href="" class="auth-form__help--link auth-form__help--forgot">Quên mật khẩu</a>
+                                <span class="auth-form__help-sparate"></span>
+                                <a href="" class="auth-form__help--link">Cần trợ giúp?</a>
+                            </div>
+                        </div>
+
+                        <div class="auth-form__control">
+                            <button class="btn auth-form__control-back">Trở Lại</button>
+                            <button class="btn btn--primary">Đăng nhập</button>
+                        </div>
+
+                        <div class="auth-form__social">
+                            <a href="" class="btn btn--with-icon auth-form__social--facebook">
+                                <i class="fab fa-facebook-square auth-form__social-icon"></i>
+                                Kết nối với Facebook
+                            </a>
+                            <a href="" class="btn btn--with-icon auth-form__social--google">
+                                <i class="fab fa-google auth-form__social-icon auth-form__social-icon--google"></i>
+                                Kết nối với Google
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

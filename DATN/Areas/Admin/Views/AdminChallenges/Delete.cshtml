@@ -1,0 +1,93 @@
+﻿@model DATN.Models.Challenge
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Xóa thử thách</h1>
+<br />
+<h3>Bạn chắc xóa thử thách này không?</h3>
+<br />
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Thông Tin Thử thách</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> Mô tả </th>
+                                <th> Chi tiết </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                <tr>
+                                    <td> 1 </td>
+                                    <td> ID </td>
+                                    <td>@Model.ChallengeId</td>
+
+                                </tr>
+                                <tr>
+                                    <td> 2 </td>
+                                    <td> Tên chủ đề </td>
+                                    <td>@Model.ChallengeName</td>
+
+                                </tr>
+                                <tr>
+                                    <td> 3 </td>
+                                    <td> Tiêu đề </td>
+                                    <td>@Model.Title</td>
+
+                                </tr>
+                                <tr>
+                                    <td> 4 </td>
+                                    <td> Hình ảnh </td>
+                                    <td>
+                                        <img style="width:400px; height:100%; border-radius:unset;" src="~/images/challenges/@Model.Thumb" />
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td> 5 </td>
+                                    <td> Ngày khởi tạo </td>
+                                    @if (Model.CreatedDate.HasValue)
+                                    {
+                                        <td>
+                                            @{DateTime date = Model.CreatedDate.Value;
+                                                String year = date.ToString("dd/MM/yyyy");
+                                            }
+                                            @year
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+
+                                </tr>
+
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ChallengeId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a class="btn btn-warning" asp-action="Index">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<DATN.Models.Education>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Thông tin học vấn</h1>
+<br />
+<h4>Tài khoản : @ViewBag.user</h4>
+<br />
+<p>
+    <a class="btn btn-inverse-primary btn-md" asp-action="Create" asp-route-id="@ViewData["userID"]">Create New</a>
+</p>
+<br />
+<div class="row">
+
+
+    <div class="col-lg-12 stretch-card">
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" style="text-align:center;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    University
+                                </th>
+                                <th>
+                                    Degree
+                                </th>
+                                <th>
+                                    Subject
+                                </th>
+                                <th>
+                                    Thời gian
+                                </th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records_table">
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.University
+                                        </td>
+                                        <td>
+                                            @item.Degree
+                                        </td>
+                                        <td>
+                                            @item.Subject
+                                        </td>
+                                        <td>
+                                            
+                                            @{
+                                                String start, endD;
+                                                if (item.StartDate.HasValue)
+                                                {
+                                                    DateTime startDate = item.StartDate.Value;
+                                                    start = startDate.ToString("dd/MM/yyyy");
+                                                }
+                                                else
+                                                    start = "";
+                                                if (item.EndDate.HasValue)
+                                                {
+                                                    DateTime endtDate = item.EndDate.Value;
+                                                    endD = endtDate.ToString("dd/MM/yyyy");
+                                                }
+                                                else
+                                                    endD = "";
+
+
+                                            }
+                                            @start - @endD
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-userId="@item.UserId" asp-route-educationId="@item.EducationId">Edit</a> |
+                                            <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-userId="@item.UserId" asp-route-educationId="@item.EducationId">Details</a> |
+                                            <a class="btn btn-inverse-danger btn-md" asp-action="Delete" asp-route-userId="@item.UserId" asp-route-educationId="@item.EducationId">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br />
+
+
+
+</div>

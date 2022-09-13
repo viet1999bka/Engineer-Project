@@ -1,0 +1,122 @@
+﻿@model IEnumerable<DATN.Models.CodeFriend>
+
+@{
+    ViewData["Title"] = "OtherCodeFriend";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listFriend = Model.ToList();
+    List<CodeFriend> listUserFriend = ViewBag.listUserFriend;
+}
+
+<div class="container">
+    <div class="home-profile">
+        <div class="grid wide pad-8">
+            <div class="home-profile--header">
+                <ul class="profile-nav__list flex1">
+                    <li class="profile-nav__item">
+                        <a asp-route-id="@ViewBag.otherId" asp-action="Index" asp-controller="Others" class="profile-nav__item--link">Overview</a>
+                    </li>
+                    <li class="profile-nav__item profile-nav__item--choose">
+                        <a asp-route-id="@ViewBag.otherId" asp-action="OtherCodeFriend" asp-controller="Others" class="profile-nav__item--link">CodeFriends</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="home-profile--body">
+                <div class="code-friend__layout">
+
+                    @if (Model != null)
+                    {
+                        int length = listFriend.Count;
+                        for (int i = 0; i < length; i++)
+                        {
+                            <div class="code-friend__wrapper">
+                                <div class="code-friend__item">
+                                    <div class="code-friend__item--infor">
+                                        <a asp-controller="Others" asp-action="Index" asp-route-id ="@listFriend[i].FriendId" style="display: flex;align-items: center;">
+                                            <div class="home-profile__user-box--avatar-wrap">
+                                                <div class="home-profile__infor--item-avatar">
+                                                    <div class="home-profile__infor--item-avatar-img" style="background-image: url('../images/AccountAvatars/@listFriend[i].Friend.Avatar');"></div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="code-friend__item--content">
+                                            <div class="code-friend__item-nameUser">@listFriend[i].Friend.FullName</div>
+                                            <div class="code-friend__item-exten">
+                                                <div class="user-box__body--item ">
+                                                    <img src="~/asset/image/80.svg" alt="">
+                                                </div>
+                                                <div class="user-box__body--item">
+                                                    <img src="~/asset/image/py3.svg" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (listUserFriend.Find(item => item.FriendId == listFriend[i].FriendId) != null)
+                                    {
+                                        var item = listUserFriend.Find(item => item.FriendId == listFriend[i].FriendId);
+                                        if (item.Status == 1)
+                                        {
+                                            <div class="code-friend__item--btn
+                                                                code-friend__item--btn-addFriend">
+                                                <div class="code-friend__item--btn-icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </div>
+                                                Bạn bè
+                                            </div>
+                                        }
+
+
+                                    }
+                                </div>
+                                @if (++i < length)
+                                {
+                                    i = i++;
+                            <div class="code-friend__item">
+                                <div class="code-friend__item--infor">
+                                    <a asp-controller="Others" asp-action="Index" asp-route-id ="@listFriend[i].FriendId" style="display: flex;align-items: center;">
+                                        <div class="home-profile__user-box--avatar-wrap">
+                                            <div class="home-profile__infor--item-avatar">
+                                                <div class="home-profile__infor--item-avatar-img" style="background-image: url('../images/AccountAvatars/@listFriend[i].Friend.Avatar');"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="code-friend__item--content">
+                                        <div class="code-friend__item-nameUser">@listFriend[i].Friend.FullName</div>
+                                        <div class="code-friend__item-exten">
+                                            <div class="user-box__body--item ">
+                                                <img src="~/asset/image/80.svg" alt="">
+                                            </div>
+                                            <div class="user-box__body--item">
+                                                <img src="~/asset/image/py3.svg" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (listUserFriend.Find(item => item.FriendId == listFriend[i].FriendId) != null)
+                                {
+                                    var item = listUserFriend.Find(item => item.FriendId == listFriend[i].FriendId);
+                                    if (item.Status == 1)
+                                    {
+                                        <div class="code-friend__item--btn
+                                                                code-friend__item--btn-addFriend">
+                                            <div class="code-friend__item--btn-icon">
+                                                <i class="fa-solid fa-check"></i>
+                                            </div>
+                                            Bạn bè
+                                        </div>
+                                    }
+
+
+                                }
+                            </div>
+                                }
+                            </div>
+
+                        }
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+﻿@model DATN.Models.TestCase
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Chỉnh sửa</h1>
+<hr />
+<h4>TestCase</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Thông tin chi tiết</h4>
+
+                <form class="forms-sample" asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="TestId" />
+                    <input type="hidden" asp-for="ExerciseId" />
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Tên thử thách</label>
+                        <div class="col-sm-9">
+                            <input value="@ViewBag.chanllengeName" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6;   />
+                            <span  class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Tên bài tập</label>
+                        <div class="col-sm-9">
+                            <input value="@ViewBag.exerciseName" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6;   />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Status" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <select asp-for="Status" class="form-control" asp-items="@ViewBag.isTrangThai" ></select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Input" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Input" class="form-control" />
+                            <span asp-validation-for="Input" class="text-danger"></span>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Output" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Output" class="form-control" />
+                            <span asp-validation-for="Output" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" /> | 
+                        <a class="btn btn-dark" asp-action="Index" asp-route-ExerciseID="@Model.ExerciseId">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

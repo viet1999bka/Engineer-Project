@@ -1,0 +1,105 @@
+﻿@model IEnumerable<DATN.Models.CodeFriend>
+
+@{
+    ViewData["Title"] = "MyCodeFriend";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listFriend = Model.ToList();
+}
+
+<div class="container">
+    <div class="home-profile">
+        <div class="grid wide pad-8">
+            <div class="home-profile--header">
+                <ul class="profile-nav__list flex1">
+                    <li class="profile-nav__item">
+                        <a asp-action="Index" asp-controller="UserProfile" class="profile-nav__item--link">Overview</a>
+                    </li>
+                    <li class="profile-nav__item profile-nav__item--choose">
+                        <a asp-action="MyCodeFriend" asp-controller="UserProfile" class="profile-nav__item--link">CodeFriends</a>
+                    </li>
+                    <li class="profile-nav__item">
+                        <a asp-action="MyFriendRequest" asp-controller="UserProfile" class="profile-nav__item--link">
+                            Friend Request
+                            <span class="friend-request__number">@ViewBag.numberOfRequest</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="home-profile--body">
+                <div class="code-friend__layout">
+
+                    @if (Model != null)
+                    {
+                        int length = listFriend.Count;
+                        for (int i = 0; i < length; i++)
+                        {
+                    <div class="code-friend__wrapper">
+                        <div class="code-friend__item">
+                            <div class="code-friend__item--infor">
+                                <a style="display: flex;align-items: center;">
+                                    <div class="home-profile__user-box--avatar-wrap">
+                                        <div class="home-profile__infor--item-avatar">
+                                            <div class="home-profile__infor--item-avatar-img" style="background-image: url('../images/AccountAvatars/@listFriend[i].Friend.Avatar');"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="code-friend__item--content">
+                                    <div class="code-friend__item-nameUser">@listFriend[i].Friend.FullName</div>
+                                    <div class="code-friend__item-exten">
+                                        <div class="user-box__body--item ">
+                                            <img src="~/asset/image/80.svg" alt="">
+                                        </div>
+                                        <div class="user-box__body--item">
+                                            <img src="~/asset/image/py3.svg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a asp-controller="Others" asp-action="Index" asp-route-id="@listFriend[i].Friend.AccountId" style="text-decoration: none;">
+                                <div class="code-friend__item--btn code-friend__item--btn-friend">
+                                    View Profile
+                                </div>
+                            </a>
+                        </div>
+                        @if (++i < length)
+                        {
+                            i = i++;
+                        <div class="code-friend__item">
+                            <div class="code-friend__item--infor">
+                                <a href="" style="display: flex;align-items: center;">
+                                    <div class="home-profile__user-box--avatar-wrap">
+                                        <div class="home-profile__infor--item-avatar">
+                                            <div class="home-profile__infor--item-avatar-img" style="background-image: url('../images/AccountAvatars/@listFriend[i].Friend.Avatar');"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="code-friend__item--content">
+                                    <div class="code-friend__item-nameUser">@listFriend[i].Friend.FullName</div>
+                                    <div class="code-friend__item-exten">
+                                        <div class="user-box__body--item ">
+                                            <img src="~/asset/image/80.svg" alt="">
+                                        </div>
+                                        <div class="user-box__body--item">
+                                            <img src="~/asset/image/py3.svg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a asp-controller="Others" asp-action="Index" asp-route-id="@listFriend[i].Friend.AccountId" style="text-decoration: none;">
+                                <div class="code-friend__item--btn code-friend__item--btn-friend">
+                                    View Profile
+                                </div>
+                            </a>
+                        </div>
+                        }
+                    </div>
+                            
+                        }
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+﻿@model IEnumerable<DATN.Models.Account>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Trang quản lý tài khoản quản trị</h1>
+<br />
+<p>
+    <a class="btn btn-inverse-primary" asp-action="Create">Create New</a>
+</p>
+<br />
+<div class="row">
+    <div class="col-lg-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Tên đày đủ
+                                </th>
+                                <th>
+                                    Quyền quản trị
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Phone)
+                                </th>
+                                <th>
+                                    Tình trạng
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CreatedDate)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                            <tr>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @item.FullName
+                                </td>
+
+                                <td>
+                                    @item.Role.RoleName
+                                </td>
+                                <td>
+                                    @item.Phone
+                                </td>
+                                @if (!item.Lock.Value == true)
+                                {
+                                    <td>
+                                        <div class="form-check form-check-success">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" checked="checked"> Active <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <div class="form-check form-check-danger">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" checked=""> Blocked <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                    </td>
+                                }
+                                @if (item.CreatedDate.HasValue)
+                                {
+                                    <td>
+                                        @{DateTime date = item.CreatedDate.Value;
+                                            String year = date.ToString("dd/MM/yyyy");
+                                        }
+                                        @year
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                <td>
+                                    <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.AccountId">Edit</a> |
+                                    <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-id="@item.AccountId">Details</a> |
+                                    <a class="btn btn-inverse-danger btn-md" asp-action="Blocked" asp-route-id="@item.AccountId">Blocked</a>
+                                </td>
+                            </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>

@@ -1,0 +1,346 @@
+﻿@model DATN.Models.Account
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Experience> lsExperience = ViewBag.lsExperience;
+    List<Education> lsEducation = ViewBag.lsEducation;
+    List<ExerciseAttemp> lsExercise = ViewBag.lsExercise;
+    List<CodeFriend> lsCodeFriend = ViewBag.lsCodeFriend;
+
+}
+
+<div class="container">
+    <div class="home-profile">
+        <div class="grid wide pad-8">
+            <div class="home-profile--header">
+                <ul class="profile-nav__list flex1">
+                    <li class="profile-nav__item profile-nav__item--choose">
+                        <a asp-action="Index" asp-controller="Others" class="profile-nav__item--link">Overview</a>
+                    </li>
+                    <li class="profile-nav__item">
+                        <a asp-route-id="@Model.AccountId" asp-action="OtherCodeFriend" asp-controller="Others" class="profile-nav__item--link">CodeFriends</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="home-profile--body">
+                <div class="row">
+                    <div class="col c-4">
+                        <div class="home-profile__edit">
+                            <a href="" class="home-profile__edit--link">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                        </div>
+                        <div class="home-profile__avatar">
+                            <div class="home-profile__avatar--icon">
+                                <div class="home-profile__avatar--inside">
+                                    @if (Model.Avatar != null)
+                                    {
+                                        <img class="avatar--image" src="~/images/AccountAvatars/@Model.Avatar.Trim()"></img>
+                                    }
+                                    else
+                                    {
+                                        <img class="avatar--image" src="~/images/AccountAvatars/default-avatar.png"></img>
+
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="home-profile__name">@Model.FullName</div>
+                        </div>
+                        @if (ViewBag.Friend != 1)
+                        {
+                            if (ViewBag.Friend == 0)
+                            {
+                                <div class="home-profile__button">
+                                    <div class="home-profile__button--wrapper">
+                                        <div class="home-profile__button--icon">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
+                                        <a asp-controller="UserProfile" asp-action="AcceptFriendRequest" asp-route-id="@Model.AccountId" asp-route-view="1" class="home-profile__button--btn">Chấp nhận</a>
+                                    </div>
+                                </div>
+                            }
+                            else if (ViewBag.Friend == 2)
+                            {
+                                <div class="home-profile__button">
+                                    <div class="home-profile__button--wrapper">
+                                        <div class="home-profile__button--icon">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </div>
+                                        <a asp-controller="UserProfile" asp-action="CancelFriend" asp-route-id="@Model.AccountId" asp-route-view="1" class="home-profile__button--btn">Hủy yêu cầu</a>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="home-profile__button">
+                                    <div class="home-profile__button--wrapper">
+                                        <div class="home-profile__button--icon">
+                                            <svg width="24" height="24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M15 12a4 4 0 100-8 4 4 0 000 8zm0-6a2 2 0 012 2 2 2 0 01-2 2 2 2 0 01-2-2c0-1.1.9-2 2-2zM7 18c0-2.7 5.3-4 8-4s8 1.3 8 4v2H7v-2zm2 0c.2-.7 3.3-2 6-2s5.8 1.3 6 2H9zm-3-6v3H4v-3H1v-2h3V7h2v3h3v2H6z"></path></svg>
+                                        </div>
+                                        <a asp-controller="UserProfile" asp-action="SendFriendRequest" asp-route-id="@Model.AccountId" asp-route-view="1" class="home-profile__button--btn">CodeFriend</a>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+                            <div class="home-profile__button">
+                                <div class="home-profile__button--wrapper">
+                                    <div class="home-profile__button--icon">
+                                        <i class="fa-solid fa-user-xmark"></i>
+                                    </div>
+                                    <a asp-controller="UserProfile" asp-action="DeleteFriend" asp-route-id="@Model.AccountId" asp-route-view="1" class="home-profile__button--btn">Xóa bạn bè</a>
+                                </div>
+                            </div>
+                        }
+                        <div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile">
+                                    Experience
+                                </span>
+                            </div>
+                            <div class="home-profile__infor--body">
+                                @if (lsExperience.Count != 0)
+                                {
+
+                                    @foreach (var item in lsExperience)
+                                    {
+                                        <div class="home-profile__infor--item js-experience-item">
+                                            <div class="home-profile__info--item-content">
+                                                <p class="home-profile__infor--item-title">@item.Company</p>
+                                                <p class="home-profile__infor--item-text">@item.JobTitle</p>
+                                                <p class="home-profile__infor--item-text">@item.JobLocation</p>
+                                                <p class="home-profile__infor--item-time">@item.StartDate.Value.ToString("MM/yyyy")  - @item.EndDate.Value.ToString("MM/yyyy")</p>
+                                            </div>
+                                            <div class="home-profile__item-btn-group">
+                                                <button type="submit" class="home-profile__item-btn js-edit-experience">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                    <input type="hidden" name="exId" value="@item.ExperienceId" />
+                                                    <input type="hidden" name="exCompany" value="@item.Company" />
+                                                    <input type="hidden" name="exJobTitle" value="@item.JobTitle" />
+                                                    <input type="hidden" name="exJobLocation" value="@item.JobLocation" />
+                                                    <input type="hidden" name="exStartDate" value="@item.StartDate.Value.ToString("MM/yyyy")" />
+                                                    <input type="hidden" name="exEndDate" value="@item.EndDate.Value.ToString("MM/yyyy")" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="home-profile__infor--no-item">
+                                        <img src="~/asset/image/briefcase-circle.svg" alt="">
+                                        <p>Nothing to show yet.</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile ">
+                                    Education
+                                </span>
+
+                            </div>
+                            <div class="home-profile__infor--body">
+                                @if (lsEducation.Count != 0)
+                                {
+
+                                    @foreach (var item in lsEducation)
+                                    {
+                                        <div class="home-profile__infor--item js-education-item">
+                                            <div class="home-profile__info--item-content">
+                                                <p class="home-profile__infor--item-title">@item.University</p>
+                                                <p class="home-profile__infor--item-text">@item.Degree</p>
+                                                <p class="home-profile__infor--item-text">@item.Subject</p>
+                                                <p class="home-profile__infor--item-time">@item.StartDate.Value.ToString("MM/yyyy")  - @item.EndDate.Value.ToString("MM/yyyy")</p>
+                                            </div>
+                                            <div class="home-profile__item-btn-group">
+                                                <button type="submit" class="home-profile__item-btn js-edit-education">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                    <input type="hidden" name="edId" value="@item.EducationId" />
+                                                    <input type="hidden" name="edUniversity" value="@item.University" />
+                                                    <input type="hidden" name="edDegree" value="@item.Degree" />
+                                                    <input type="hidden" name="edSubject" value="@item.Subject" />
+                                                    <input type="hidden" name="edStartDate" value="@item.StartDate.Value.ToString("MM/yyyy")" />
+                                                    <input type="hidden" name="edEndDate" value="@item.EndDate.Value.ToString("MM/yyyy")" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="home-profile__infor--no-item">
+                                        <img src="~/asset/image/briefcase-circle.svg" alt="">
+                                        <p>Nothing to show yet.</p>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+
+                        <div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile">
+                                    Code Friend
+                                </span>
+                                <a asp-route-id="@Model.AccountId" asp-action="OtherCodeFriend" asp-controller="Others" class="home-profile__infor--header-btn">
+                                    Show All
+                                </a>
+                            </div>
+                            <div class="home-profile__infor--body" style="overflow-y: unset;">
+                                @if (lsCodeFriend != null)
+                                {
+                                    <div class="home-profile__infor--friend">
+                                        @foreach (var friend in lsCodeFriend)
+                                        {
+                                            <div class="home-profie__infor--freind-item">
+                                                <a style="display: inline-block; cursor: pointer;">
+                                                    <div class="home-profile__infor--item-avatar">
+                                                        <img class="home-profile__infor--item-avatar-img" src="~/images/AccountAvatars/@friend.Friend.Avatar"></img>
+                                                    </div>
+                                                </a>
+                                                <div class="home-profile__user-box">
+                                                    <div class="home-profile__user-box--wrap">
+                                                        <div class="home-profile__user-box--header">
+                                                            <label class="home-profile__user-box-item">@friend.Friend.FullName</label>
+                                                        </div>
+
+                                                        <div class="home-profile__user-box--body">
+                                                            <div class="home-profile__user-box--inside">
+                                                                <div class="user-box__body--item">
+                                                                    <img src="./asset/image/80.svg" alt="">
+                                                                </div>
+                                                                <div class="user-box__body--item">
+                                                                    <img src="./asset/image/py3.svg" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="home-profile__user-box-viewPro">
+                                                                <a asp-controller="Others" asp-action="Index" asp-route-id="@friend.Friend.AccountId"> Xem trang cá nhân</a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="home-profile__user-box--avatar">
+                                                            <a>
+                                                                <div class="home-profile__user-box--avatar-wrap">
+                                                                    <div class="home-profile__infor--item-avatar">
+                                                                        <div class="home-profile__infor--item-avatar-img" style="background-image: url('./images/AccountAvatars/@friend.Friend.Avatar' );"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        }
+
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="home-profile__infor--no-item">
+                                        <img src="~/asset/image/briefcase-circle.svg" alt="">
+                                        <p>Nothing to show yet.</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col c-8">
+                        <div class="home-profile__slide">
+                            <img src="~/images/slides/10-câu-nói-xứng-đáng-để-bạn-chọn-làm-châm-ngôn-sống-của-mình-1.png" alt="" class="home-profile__slide--img">
+                            <img src="~/images/slides/cham-ngon-cuoc-song-2.jpg" alt="" class="home-profile__slide--img">
+                            <img src="~/images/slides/cham-ngon-cuoc-song-buon.jpg" alt="" class="home-profile__slide--img">
+                            <img src="~/images/slides/maxresdefault.jpg" alt="" class="home-profile__slide--img">
+                        </div>
+                        <div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile">
+                                    Thông tin cá nhân
+                                </span>
+
+                            </div>
+                            <div class="home-profile__infor--body no-scroll-h js-infor-content">
+                                <div class="layout-v">
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Email</label>
+                                        <span class="home-profile__info--content col c-7">@Model.Email</span>
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Tên đầy đủ</label>
+                                        <span id="userName" class="home-profile__info--content col c-7">@Model.FullName</span>
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Số điện thoại</label>
+                                        <span id="userPhone" class="home-profile__info--content col c-7">@Model.Phone</span>
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Ngày sinh</label>
+                                        @if (Model.BirthDay != null)
+                                        {
+                                            <span id="userBirthDay" class="home-profile__info--content col c-7">@Model.BirthDay.Value.ToString("yyyy-MM-dd")</span>
+                                        }
+                                        else
+                                        {
+                                            <span id="userBirthDay" class="home-profile__info--content col c-7">@Model.BirthDay</span>
+                                        }
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Địa chỉ</label>
+                                        <span id="userAddress" class="home-profile__info--content col c-7">
+                                            @Model.Address
+                                        </span>
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Ngày tạo</label>
+                                        <span class="home-profile__info--content col c-7">@Model.CreatedDate.Value.ToString("yyyy-MM-dd")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile">
+                                    Last solution
+                                </span>
+                            </div>
+                            <div class="home-profile__infor--body">
+                                <table class="home-profile__list-solution">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Time Submit</th>
+                                        <th></th>
+                                    </tr>
+                                    @if (lsExercise != null)
+                                    {
+                                        @foreach (var item in lsExercise)
+                                        {
+                                            <tr>
+                                                <td>@item.Exercise.ExcerciseName</td>
+                                                <td>@item.TimeAttemp</td>
+                                                <td>
+                                                    <a class="btn-view-solution" asp-action="CodePage" asp-controller="App" asp-route-exerciseId="@item.ExerciseId">ViewSolution</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </table>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>

@@ -1,0 +1,3 @@
+﻿bool solution(string str){
+
+}

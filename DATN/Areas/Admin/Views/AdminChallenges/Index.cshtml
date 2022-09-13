@@ -1,0 +1,95 @@
+﻿@model IEnumerable<DATN.Models.Challenge>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Quản lý thử thách</h1>
+<br />
+<p>
+    <a class="btn btn-inverse-primary btn-md" asp-action="Create">Create New</a>
+</p>
+<br />
+<div class="row">
+
+
+    <div class="col-lg-12 stretch-card">
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" style="text-align:center;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Tên chủ đề
+                                </th>
+                                <th>
+                                    Hình ảnh
+                                </th>
+                                <th>
+                                    Mô tả
+                                </th>
+                                <th>
+                                    Ngày tạo
+                                </th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records_table">
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                            <tr>
+                                <td>
+                                    @item.ChallengeId
+                                </td>
+                                <td>
+                                    @item.ChallengeName
+                                </td>
+                                <td>
+                                    <img style="width:150px; height:100%; border-radius:unset;" src="~/images/challenges/@item.Thumb" />
+                                </td>
+                                <td>
+                                    @item.Description
+                                </td>
+                                @if (item.CreatedDate.HasValue)
+                                {
+                                    <td>
+                                        @{DateTime date = item.CreatedDate.Value;
+                                            String year = date.ToString("dd/MM/yyyy");
+                                        }
+                                        @year
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+
+                                <td>
+                                    <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.ChallengeId">Edit</a> |
+                                    <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-id="@item.ChallengeId">Details</a> |
+                                    <a class="btn btn-inverse-danger btn-md" asp-action="Delete" asp-route-id="@item.ChallengeId">Delete</a>
+                                </td>
+                            </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br />
+
+
+
+</div>

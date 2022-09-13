@@ -1,0 +1,1070 @@
+﻿@model DATN.Models.Account
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Experience> lsExperience = ViewBag.lsExperience;
+    List<Education> lsEducation = ViewBag.lsEducation;
+    List<ExerciseAttemp> lsExercise = ViewBag.lsExercise;
+    List<CodeFriend> lsCodeFriend = ViewBag.lsCodeFriend;
+
+}
+
+<div class="container">
+    <div class="home-profile">
+        <div class="grid wide pad-8">
+            <div class="home-profile--header">
+                <ul class="profile-nav__list flex1">
+                    <li class="profile-nav__item profile-nav__item--choose">
+                        <a asp-action="Index" asp-controller="UserProfile" class="profile-nav__item--link">Overview</a>
+                    </li>
+                    <li class="profile-nav__item">
+                        <a asp-action="MyCodeFriend" asp-controller="UserProfile" class="profile-nav__item--link">CodeFriends</a>
+                    </li>
+                    <li class="profile-nav__item">
+                        <a asp-action="MyFriendRequest" asp-controller="UserProfile" class="profile-nav__item--link">
+                            Friend Request
+                            <span class="friend-request__number">@ViewBag.numberOfRequest</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="home-profile--body">
+                <div class="row">
+                    <div class="col c-4">
+                        <div class="home-profile__edit">
+                            <a href="" class="home-profile__edit--link">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                        </div>
+                        <div class="home-profile__avatar">
+                            <div class="home-profile__avatar--icon">
+                                <div class="home-profile__avatar--inside">
+                                    @if(Model.Avatar != null){
+                                        <img class="avatar--image" src="~/images/AccountAvatars/@Model.Avatar"></img>
+                                      }
+                                      else
+                                    {
+                                       <img class="avatar--image" src="~/images/AccountAvatars/default-avatar.png"></img>
+
+                                    }
+                                    <div class="avatar--overlay js-changeAva-btn">
+                                        <div class="avatar-overlay__icon">
+                                            <svg width="24" height="24" viewBox="0 0 24 24"><ellipse cx="12" cy="13.13" rx="3.61" ry="3.61"></ellipse><path d="M8.6 1.84L6.56 4.1H2.97C1.73 4.1.7 5.1.7 6.35V19.9c0 1.25 1.03 2.26 2.27 2.26h18.07c1.24 0 2.26-1 2.26-2.26V6.35c0-1.24-1.02-2.25-2.26-2.25h-3.58L15.4 1.84H8.6zM12 18.77c-3.12 0-5.65-2.53-5.65-5.64C6.35 10 8.88 7.48 12 7.48s5.65 2.53 5.65 5.65-2.53 5.64-5.65 5.64z"></path></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="home-profile__name">@Model.FullName</div>
+                        </div>
+                        <div class="home-profile__email">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>@Model.Email</span>
+                        </div>
+                        <div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile">
+                                    Experience
+                                </span>
+                                <button class="home-profile__infor--header-btn js-experience">
+                                    + Add
+                                </button>
+                            </div>
+                            <div class="home-profile__infor--body">
+                                @if (lsExperience.Count != 0)
+                                {
+
+                                    @foreach (var item in lsExperience)
+                                    {
+                                        <div class="home-profile__infor--item js-experience-item">
+                                            <div class="home-profile__info--item-content">
+                                                <p class="home-profile__infor--item-title">@item.Company</p>
+                                                <p class="home-profile__infor--item-text">@item.JobTitle</p>
+                                                <p class="home-profile__infor--item-text">@item.JobLocation</p>
+                                                <p class="home-profile__infor--item-time">@item.StartDate.Value.ToString("MM/yyyy")  - @item.EndDate.Value.ToString("MM/yyyy")</p>
+                                            </div>
+                                            <div class="home-profile__item-btn-group">
+                                                <button type="submit" class="home-profile__item-btn js-edit-experience">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                    <input type="hidden" name="exId" value="@item.ExperienceId" />
+                                                    <input type="hidden" name="exCompany" value="@item.Company" />
+                                                    <input type="hidden" name="exJobTitle" value="@item.JobTitle" />
+                                                    <input type="hidden" name="exJobLocation" value="@item.JobLocation" />
+                                                    <input type="hidden" name="exStartDate" value="@item.StartDate.Value.ToString("MM/yyyy")" />
+                                                    <input type="hidden" name="exEndDate" value="@item.EndDate.Value.ToString("MM/yyyy")" />
+                                                </button>
+                                                <form asp-action="DeleteExperience" asp-controller="UserProfile" class="home-profile__item-btn">
+                                                    <input type="hidden" name="experienceId" value="@item.ExperienceId" />
+                                                    <button class="home-profile__item-btn">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="home-profile__infor--no-item">
+                                        <img src="~/asset/image/briefcase-circle.svg" alt="">
+                                        <p>Nothing to show yet.</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile ">
+                                    Education
+                                </span>
+                                <button class="home-profile__infor--header-btn js-education">
+                                    + Add
+                                </button>
+                            </div>
+                            <div class="home-profile__infor--body">
+                                @if (lsEducation.Count != 0)
+                                {
+
+                                    @foreach (var item in lsEducation)
+                                    {
+                                        <div class="home-profile__infor--item js-education-item">
+                                            <div class="home-profile__info--item-content">
+                                                <p class="home-profile__infor--item-title">@item.University</p>
+                                                <p class="home-profile__infor--item-text">@item.Degree</p>
+                                                <p class="home-profile__infor--item-text">@item.Subject</p>
+                                                <p class="home-profile__infor--item-time">@item.StartDate.Value.ToString("MM/yyyy")  - @item.EndDate.Value.ToString("MM/yyyy")</p>
+                                            </div>
+                                            <div class="home-profile__item-btn-group">
+                                                <button type="submit" class="home-profile__item-btn js-edit-education">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                    <input type="hidden" name="edId" value="@item.EducationId" />
+                                                    <input type="hidden" name="edUniversity" value="@item.University" />
+                                                    <input type="hidden" name="edDegree" value="@item.Degree" />
+                                                    <input type="hidden" name="edSubject" value="@item.Subject" />
+                                                    <input type="hidden" name="edStartDate" value="@item.StartDate.Value.ToString("MM/yyyy")" />
+                                                    <input type="hidden" name="edEndDate" value="@item.EndDate.Value.ToString("MM/yyyy")" />
+                                                </button>
+                                                <form asp-action="DeleteEducation" asp-controller="UserProfile" class="home-profile__item-btn">
+                                                    <input type="hidden" name="educationId" value="@item.EducationId" />
+                                                    <button class="home-profile__item-btn">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="home-profile__infor--no-item">
+                                        <img src="~/asset/image/briefcase-circle.svg" alt="">
+                                        <p>Nothing to show yet.</p>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+
+                        <div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile">
+                                    Code Friend
+                                </span>
+                                <a asp-action="MyCodeFriend" asp-controller="UserProfile" class="home-profile__infor--header-btn">
+                                    Show All
+                                </a>
+                            </div>
+                            <div class="home-profile__infor--body" style="overflow-y: unset;">
+                                @if (lsCodeFriend != null)
+                                {
+                                    <div class="home-profile__infor--friend">
+                                        @foreach (var friend in lsCodeFriend)
+                                        {
+                                            <div class="home-profie__infor--freind-item">
+                                                <a style="display: inline-block; cursor: pointer;">
+                                                    <div class="home-profile__infor--item-avatar">
+                                                        <img class="home-profile__infor--item-avatar-img" src="~/images/AccountAvatars/@friend.Friend.Avatar"></img>
+                                                    </div>
+                                                </a>
+                                                <div class="home-profile__user-box">
+                                                    <div class="home-profile__user-box--wrap">
+                                                        <div class="home-profile__user-box--header">
+                                                            <label class="home-profile__user-box-item">@friend.Friend.FullName</label>
+                                                        </div>
+
+                                                        <div class="home-profile__user-box--body">
+                                                            <div class="home-profile__user-box--inside">
+                                                                <div class="user-box__body--item">
+                                                                    <img src="./asset/image/80.svg" alt="">
+                                                                </div>
+                                                                <div class="user-box__body--item">
+                                                                    <img src="./asset/image/py3.svg" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="home-profile__user-box-viewPro">
+                                                                <a asp-controller="Others" asp-action="Index" asp-route-id="@friend.Friend.AccountId"> Xem trang cá nhân</a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="home-profile__user-box--avatar">
+                                                            <a>
+                                                                <div class="home-profile__user-box--avatar-wrap">
+                                                                    <div class="home-profile__infor--item-avatar">
+                                                                        <div class="home-profile__infor--item-avatar-img" style="background-image: url('./images/AccountAvatars/@friend.Friend.Avatar' );"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        }
+
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="home-profile__infor--no-item">
+                                        <img src="~/asset/image/briefcase-circle.svg" alt="">
+                                        <p>Nothing to show yet.</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col c-8">
+                        <div class="home-profile__slide">
+                            <img src="~/images/slides/10-câu-nói-xứng-đáng-để-bạn-chọn-làm-châm-ngôn-sống-của-mình-1.png" alt="" class="home-profile__slide--img">
+                            <img src="~/images/slides/cham-ngon-cuoc-song-2.jpg" alt="" class="home-profile__slide--img">
+                            <img src="~/images/slides/cham-ngon-cuoc-song-buon.jpg" alt="" class="home-profile__slide--img">
+                            <img src="~/images/slides/maxresdefault.jpg" alt="" class="home-profile__slide--img">
+                        </div>
+                        <div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile">
+                                    Thông tin cá nhân
+                                </span>
+                                <div>
+                                    <button class="home-profile__infor--header-btn js-information">
+                                        + Chỉnh sửa
+                                    </button>
+                                    <button class="home-profile__infor--header-btn js-password">
+                                        + Đổi mật khẩu
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="home-profile__infor--body no-scroll-h js-infor-content">
+                                <div class="layout-v">
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Email</label>
+                                        <span class="home-profile__info--content col c-7">@Model.Email</span>
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Tên đầy đủ</label>
+                                        <span id="userName" class="home-profile__info--content col c-7">@Model.FullName</span>
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Số điện thoại</label>
+                                        <span id="userPhone" class="home-profile__info--content col c-7">@Model.Phone</span>
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Ngày sinh</label>
+                                        @if (Model.BirthDay != null)
+                                        {
+                                            <span id="userBirthDay" class="home-profile__info--content col c-7">@Model.BirthDay.Value.ToString("yyyy-MM-dd")</span>
+                                         }
+                                        else
+                                        {
+                                            <span id="userBirthDay" class="home-profile__info--content col c-7">@Model.BirthDay</span>
+                                        }
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Địa chỉ</label>
+                                        <span id="userAddress" class="home-profile__info--content col c-7">
+                                            @Model.Address
+                                        </span>
+                                    </div>
+                                    <div class="home-profile__info--item-inside row">
+                                        <label for="" class="home-profile__info--label col c-5">Ngày tạo</label>
+                                        <span class="home-profile__info--content col c-7">@Model.CreatedDate.Value.ToString("yyyy-MM-dd")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="home-profile__infor">
+                            <div class="home-profile__infor--header">
+                                <span class="home-profile__infor--header-titile">
+                                    Last solution
+                                </span>
+                            </div>
+                            <div class="home-profile__infor--body">
+                                <table class="home-profile__list-solution">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Language</th>
+                                        <th>Time Submit</th>
+                                        <th></th>
+                                    </tr>
+                                    @if (lsExercise != null)
+                                    {
+                                        @foreach (var item in lsExercise)
+                                        {
+                                            <tr>
+                                                <td>@item.Exercise.ExcerciseName</td>
+                                                <td>@item.Language.LạnguageDisplay</td>
+                                                <td>@item.TimeAttemp</td>
+                                                <td>
+                                                    <a class="btn-view-solution" asp-action="CodePage" asp-controller="App" asp-route-exerciseId ="@item.ExerciseId">ViewSolution</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+<!-- Modal -->
+<div class="modal">
+    <div class="modal__overlay js-modal__overlay"></div>
+    <div class="modal__body">
+        <!-- Form add experience -->
+        <form asp-action="AddExperience">
+            <div class="add-form js-add-experience">
+                <div class="add-form__container">
+                    <div class="add-form__header">
+                        <h3 class="add-form__heading flex1">Work</h3>
+                        <span class="add-form__close js-close-modal">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </div>
+                    <div class="add-form__body">
+                        <div class="add-form__logo">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div class="add-form__aside">
+
+                            <div class="add-form__group">
+
+                                <label class="add-form__label">Company</label>
+                                <input name="company" type="text" class="add-form__input ful-width" placeholder="Company">
+                            </div>
+                            <div class="add-form__group">
+                                <label class="add-form__label">Job Title</label>
+                                <input name="jobTitle" type="text" class="add-form__input ful-width" placeholder="Job Title">
+                            </div>
+                            <div class="add-form__group">
+                                <label class="add-form__label">Job Location</label>
+                                <input name="jobLocation" type="text" class="add-form__input ful-width" placeholder="e.g., San Francisco, CA, USA">
+                            </div>
+                            <div class="add-form__group">
+                                <label class="add-form__label">Start Date</label>
+                                <div class="add-form__group--date">
+                                    <div class="add-form__select c-5">
+                                        <select name="startDate" required>
+                                            <option value="" disabled selected hidden>Start Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="add-form__select c-5">
+                                        <select name="startYear" class="js-year" required>
+                                            <option value="" disabled selected hidden>Start Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">End Date</label>
+                                <div class="add-form__group--date">
+                                    <div class="add-form__select c-5">
+                                        <select name="endDate" required>
+                                            <option value="" disabled selected hidden style="color: gray;">End Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="add-form__select c-5">
+                                        <select name="endYear" class="js-year" required>
+                                            <option value="" disabled selected hidden>End Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form__footer">
+                        <button class="add-form__submit">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Form edit experience -->
+        <form asp-action="EditExperience">
+            <div class="add-form js-edit-fexperience">
+                <div class="add-form__container">
+                    <div class="add-form__header">
+                        <h3 class="add-form__heading flex1">Work</h3>
+                        <span class="add-form__close js-close-modal">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </div>
+                    <div class="add-form__body">
+                        <div class="add-form__logo">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div class="add-form__aside">
+                            <input name="id" type="hidden">
+                            <div class="add-form__group">
+                                <label class="add-form__label">Company</label>
+                                <input name="company" type="text" class="add-form__input ful-width" placeholder="Company">
+                            </div>
+                            <div class="add-form__group">
+                                <label class="add-form__label">Job Title</label>
+                                <input name="jobTitle" type="text" class="add-form__input ful-width" placeholder="Job Title">
+                            </div>
+                            <div class="add-form__group">
+                                <label class="add-form__label">Job Location</label>
+                                <input name="jobLocation" type="text" class="add-form__input ful-width" placeholder="e.g., San Francisco, CA, USA">
+                            </div>
+                            <div class="add-form__group">
+                                <label class="add-form__label">Start Date</label>
+                                <div class="add-form__group--date">
+                                    <div class="add-form__select c-5">
+                                        <select name="startDate" required>
+                                            <option value="" disabled selected hidden>Start Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="add-form__select c-5">
+                                        <select name="startYear" class="js-year" required>
+                                            <option value="" disabled selected hidden>Start Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">End Date</label>
+                                <div class="add-form__group--date">
+                                    <div class="add-form__select c-5">
+                                        <select name="endDate" required>
+                                            <option value="" disabled selected hidden style="color: gray;">End Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="add-form__select c-5">
+                                        <select name="endYear" class="js-year" required>
+                                            <option value="" disabled selected hidden>End Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form__footer">
+                        <button class="add-form__submit">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Form add education -->
+        <form asp-action="AddEducation">
+            <div class="add-form js-add-education">
+                <div class="add-form__container">
+                    <div class="add-form__header">
+                        <h3 class="add-form__heading flex1">Education</h3>
+                        <span class="add-form__close js-close-modal">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </div>
+                    <div class="add-form__body ">
+                        <div class="add-form__logo">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div class="add-form__aside">
+                            <div class="add-form__group">
+                                <label class="add-form__label">University/School</label>
+                                <input name="university" type="text" class="add-form__input ful-width" placeholder="University">
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Degree Fields</label>
+                                <input name="degree" type="text" class="add-form__input ful-width" placeholder="Enter your Majors">
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Minor Subjects   </label>
+                                <input name="subject" type="text" class="add-form__input ful-width" placeholder="Enter your Minors">
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Start Date</label>
+                                <div class="add-form__group--date">
+                                    <div class="add-form__select c-5">
+                                        <select name="startDate" required>
+                                            <option value="" disabled selected hidden>Start Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="add-form__select c-5">
+                                        <select name="startYear" class="js-year" required>
+                                            <option value="" disabled selected hidden>Start Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">End Date</label>
+                                <div class="add-form__group--date">
+                                    <div class="add-form__select c-5">
+                                        <select name="endDate" required>
+                                            <option value="" disabled selected hidden style="color: gray;">End Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="add-form__select c-5">
+                                        <select name="endYear" required class="js-year">
+                                            <option value="" disabled selected hidden>End Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form__footer">
+                        <button class="add-form__submit">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Form edit education -->
+        <form asp-action="EditEducation">
+            <div class="add-form js-edit-feducation">
+                <div class="add-form__container">
+                    <div class="add-form__header">
+                        <h3 class="add-form__heading flex1">Education</h3>
+                        <span class="add-form__close js-close-modal">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </div>
+                    <div class="add-form__body ">
+                        <div class="add-form__logo">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <input name="id" type="hidden">
+                        <div class="add-form__aside">
+                            <div class="add-form__group">
+                                <label class="add-form__label">University/School</label>
+                                <input name="university" type="text" class="add-form__input ful-width" placeholder="University">
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Degree Fields</label>
+                                <input name="degree" type="text" class="add-form__input ful-width" placeholder="Enter your Majors">
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Minor Subjects   </label>
+                                <input name="subject" type="text" class="add-form__input ful-width" placeholder="Enter your Minors">
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Start Date</label>
+                                <div class="add-form__group--date">
+                                    <div class="add-form__select c-5">
+                                        <select name="startDate" required>
+                                            <option value="" disabled selected hidden>Start Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="add-form__select c-5">
+                                        <select name="startYear" class="js-year" required>
+                                            <option value="" disabled selected hidden>Start Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">End Date</label>
+                                <div class="add-form__group--date">
+                                    <div class="add-form__select c-5">
+                                        <select name="endDate" required>
+                                            <option value="" disabled selected hidden style="color: gray;">End Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="add-form__select c-5">
+                                        <select name="endYear" required class="js-year">
+                                            <option value="" disabled selected hidden>End Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form__footer">
+                        <button class="add-form__submit">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- Form edit information of user account -->
+        <form asp-action="EditUserInfor">
+            <div class="add-form js-edit-information">
+                <div class="add-form__container">
+                    <div class="add-form__header">
+                        <h3 class="add-form__heading flex1">Thông tin cá nhân</h3>
+                        <span class="add-form__close js-close-modal">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </div>
+                    <div class="add-form__body ">
+                        <div class="add-form__logo">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div class="add-form__aside">
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Họ và tên</label>
+                                <input name="fullname" type="text" class="add-form__input ful-width" placeholder="Full Name">
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Số điện thoại</label>
+                                <input name="phone" type="tel" maxlength="15" minlength="9" class="add-form__input ful-width" placeholder="0965538610" +>
+                            </div>
+                            <div class="add-form__group">
+                                <label id="errorPhone" for="" class="add-form__label" style="color:red;"></label>
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Ngày sinh</label>
+                                <input name="birthday" type="date" class="add-form__input ful-width" placeholder="BirthDay">
+                                <input name="checkbrirth" type="hidden" />
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Địa chỉ</label>
+                                <input name="address" type="text" class="add-form__input ful-width" placeholder="Address">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form__footer">
+                        <button class="add-form__submit">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- Form change password -->
+        <form asp-action="ChangePassword">
+            <div class="add-form js-change-password">
+                <div class="add-form__container">
+                    <div class="add-form__header">
+                        <h3 class="add-form__heading flex1">Thay đổi mật khẩu</h3>
+                        <span class="add-form__close js-close-modal">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </div>
+                    <div class="add-form__body ">
+                        <div class="add-form__logo">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div class="add-form__aside">
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Mật khẩu cũ</label>
+                                <input type="password" name="oldPass" class="add-form__input ful-width" placeholder="Old password" required>
+                            </div>
+                            <div class="add-form__group">
+                                <label id="errorOldPass" for="" class="add-form__label" style="color:red;"></label>
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Mật khẩu mới</label>
+                                <input type="password" name="newPass" class="add-form__input ful-width" placeholder="New password" required>
+                            </div>
+                            <div class="add-form__group">
+                                <label id="errorNewPass" for="" class="add-form__label" style="color:red;"></label>
+                            </div>
+                            <div class="add-form__group">
+                                <label for="" class="add-form__label">Nhập lại mật khẩu</label>
+                                <input type="password" name="confirmPass" class="add-form__input ful-width" placeholder="Confirm new pass" required onkeyup="validate_password()">
+                            </div>
+                            <div class="add-form__group">
+                                <label id="errorRePass" for="" class="add-form__label"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form__footer">
+                        <button name="button" class="add-form__submit">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Form change avatar -->
+        <form asp-action="ChangeAvatar" enctype="multipart/form-data">
+            <div class="modal--container__changeAva js-upload-avatart">
+                <div class="modal--content__changeAva">
+                    <div class="modal--header__changeAva">
+                        <div class="modal--header__changeAva-title">
+                            Upload Profile Picture
+                        </div>
+
+                        <div class="modal--header__changeAva-close js-close-modal">
+                            <i class="fa-solid fa-xmark modal--header__changeAva-close-btn"></i>
+                        </div>
+                    </div>
+
+                    <div class="modal--body__changeAva">
+                        <div class="modal--body__changeAva-wrap">
+                            <input name="fAvatar" id="fAvatar" type="file" style="display: none;" class="js-changeAva-input">
+                            <div class="modal--body__choseFile">
+                                <div class="modal--body__choseFile-btn js-changeAva-choose">CHOOSE FILE</div>
+                                <label for="" class="modal--body__choseFile-lb js-fileAva">No File Choose</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal--footer__chageAva">
+                        <input class="modal--footer__submit" type="submit" value="Upload">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<style>
+    select:invalid {
+        color: #666;
+    }
+</style>
+<script>
+
+    const modal = document.querySelector('.modal')
+    const overlay = document.querySelector('.js-modal__overlay')
+    const addExperience = document.querySelector('.js-experience')
+    const addEducation = document.querySelector('.js-education')
+    const editInfor = document.querySelector('.js-information')
+    const changePass = document.querySelector('.js-password')
+    const changeAva = document.querySelector('.js-changeAva-btn')
+
+    const formExperience = document.querySelector('.js-add-experience')
+    const formEducation = document.querySelector('.js-add-education')
+    const formEditInfor = document.querySelector('.js-edit-information')
+    const formChangePass = document.querySelector('.js-change-password')
+    const fEditEx = document.querySelector('.js-edit-fexperience')
+    const fEditEd = document.querySelector('.js-edit-feducation')
+    const formChangeAva = document.querySelector('.js-upload-avatart')
+    const close = document.querySelectorAll('.js-close-modal')
+    const errorPhone = document.getElementById("errorPhone");
+    const errorOldPass = document.getElementById("errorOldPass");
+    const errorNewPass = document.getElementById("errorNewPass");
+
+    let msg = '@TempData["ErrorPhone"]';
+    let msgOldPass = '@TempData["errorOldPass"]';
+    let msgNewPass = '@TempData["errorNewPass"]';
+
+    var btnAva = document.querySelector('.js-changeAva-choose');
+    var inputAva = document.querySelector('.js-changeAva-input');
+    var fileAva = document.querySelector('.js-fileAva');
+
+    function showAddExperience() {
+        modal.classList.add('open-modal')
+        formExperience.classList.add('open-modal')
+        formEducation.classList.remove('open-modal')
+    }
+
+    function showAddEducation() {
+        modal.classList.add('open-modal')
+        formEducation.classList.add('open-modal')
+        formExperience.classList.remove('open-modal')
+    }
+
+
+    function closeModal() {
+        modal.classList.remove('open-modal');
+        formExperience.classList.remove('open-modal');
+        formChangePass.classList.remove('open-modal');
+        formEducation.classList.remove('open-modal');
+        formEditInfor.classList.remove('open-modal');
+        fEditEx.classList.remove('open-modal');
+        fEditEd.classList.remove('open-modal');
+        formChangeAva.classList.remove('open-modal');
+
+        errorPhone.innerText = '';
+        msg = '';
+
+        errorOldPass.innerText = '';
+        msgOldPass = '';
+        errorNewPass.innerText = '';
+        msgNewPass = '';
+    }
+
+    addExperience.addEventListener('click', showAddExperience)
+    addEducation.addEventListener('click', showAddEducation)
+    overlay.addEventListener('click', closeModal)
+    for (const clos of close) {
+        clos.addEventListener('click', closeModal)
+    }
+
+
+    changePass.addEventListener('click', function () {
+        modal.classList.add('open-modal')
+        formChangePass.classList.add('open-modal');
+    })
+
+    changeAva.addEventListener('click', function () {
+        modal.classList.add('open-modal');
+        formChangeAva.classList.add('open-modal');
+    })
+
+    btnAva.addEventListener('click', function (e) {
+        inputAva.click();
+
+    });
+
+    inputAva.addEventListener('change', function () {
+        fileAva.innerHTML = inputAva.value;
+    })
+
+</script>
+<script>
+    var slideIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("home-profile__slide--img");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > x.length) { slideIndex = 1 }
+        x[slideIndex - 1].style.display = "block";
+        setTimeout(carousel, 2000); // Change image every 2 seconds
+    }
+</script>
+
+<!-- Js giá trị năm input -->
+<script>
+    const minYear = 1960;
+    const maxYear = 2030;
+    var select = document.querySelectorAll('.js-year');
+    for (let i = 0; i < select.length; i++) {
+        for (let j = minYear; j <= maxYear; j++) {
+            select[i].options.add(new Option(j.toString(), j));
+        }
+    }
+</script>
+
+@* Chỉnh sửa trải nghiệm *@
+<script>
+    const editEx = document.querySelectorAll('.js-edit-experience')
+    for (const item of editEx) {
+        item.addEventListener('click', function () {
+            modal.classList.add('open-modal');
+            fEditEx.classList.add('open-modal');
+            fEditEx.querySelector('input[name="id"]').value = item.querySelector('input[name="exId"]').value
+            fEditEx.querySelector('input[name="company"]').value = item.querySelector('input[name="exCompany"]').value
+            fEditEx.querySelector('input[name="jobTitle"]').value = item.querySelector('input[name="exJobTitle"]').value
+            fEditEx.querySelector('input[name="jobLocation"]').value = item.querySelector('input[name="exJobLocation"]').value
+            var date = item.querySelector('input[name="exStartDate"]').value
+            date = date.toString().split("/");
+            fEditEx.querySelector('select[name="startDate"]').value = date[0];
+            fEditEx.querySelector('select[name="startYear"]').value = date[1];
+            var date = item.querySelector('input[name="exEndDate"]').value
+            date = date.toString().split("/");
+            fEditEx.querySelector('select[name="endDate"]').value = date[0];
+            fEditEx.querySelector('select[name="endYear"]').value = date[1];
+            console.log(fEditEx.querySelector('input[name="id"]').value)
+        })
+
+
+    }
+
+</script>
+
+@* Chỉnh sửa học vấn *@
+
+<script>
+    const editEd = document.querySelectorAll('.js-edit-education')
+    for (const item of editEd) {
+        item.addEventListener('click', function () {
+            modal.classList.add('open-modal');
+            fEditEd.classList.add('open-modal');
+            fEditEd.querySelector('input[name="id"]').value = item.querySelector('input[name="edId"]').value
+            fEditEd.querySelector('input[name="university"]').value = item.querySelector('input[name="edUniversity"]').value
+            fEditEd.querySelector('input[name="degree"]').value = item.querySelector('input[name="edDegree"]').value
+            fEditEd.querySelector('input[name="subject"]').value = item.querySelector('input[name="edSubject"]').value
+            var date = item.querySelector('input[name="edStartDate"]').value
+            date = date.toString().split("/");
+            fEditEd.querySelector('select[name="startDate"]').value = date[0];
+            fEditEd.querySelector('select[name="startYear"]').value = date[1];
+            var date = item.querySelector('input[name="edEndDate"]').value
+            date = date.toString().split("/");
+            fEditEd.querySelector('select[name="endDate"]').value = date[0];
+            fEditEd.querySelector('select[name="endYear"]').value = date[1];
+            console.log(fEditEx.querySelector('input[name="id"]').value)
+        })
+
+
+    }
+    
+</script>
+
+
+@* Chỉnh sửa thông tin cá nhân *@
+<script>
+
+    editInfor.addEventListener('click', function () {
+        modal.classList.add('open-modal')
+        formEditInfor.classList.add('open-modal');
+        formEditInfor.querySelector('input[name="fullname"]').value = document.getElementById('userName').innerText
+        formEditInfor.querySelector('input[name="phone"]').value = document.getElementById('userPhone').innerText
+        formEditInfor.querySelector('input[name="address"]').value = document.getElementById('userAddress').innerText
+        formEditInfor.querySelector('input[name="birthday"]').value = document.getElementById('userBirthDay').innerText
+
+    })
+
+
+    if (msg != '') {
+        modal.classList.add('open-modal')
+        formEditInfor.classList.add('open-modal')
+        formEditInfor.querySelector('input[name="fullname"]').value = document.getElementById('userName').innerText
+        formEditInfor.querySelector('input[name="phone"]').value = document.getElementById('userPhone').innerText
+        formEditInfor.querySelector('input[name="address"]').value = document.getElementById('userAddress').innerText
+        formEditInfor.querySelector('input[name="birthday"]').value = document.getElementById('userBirthDay').innerText
+        errorPhone.innerText = msg;
+    }
+</script>
+
+@* Đổi mật khẩu *@
+
+<script>
+    if (msgNewPass != '' || msgOldPass != '') {
+        modal.classList.add('open-modal')
+        formChangePass.classList.add('open-modal')
+        errorOldPass.innerText = msgOldPass;
+        errorNewPass.innerText = msgNewPass; 
+    }
+
+    var check = function () {
+        if (formChangePass.querySelector('input[name="oldPass"]').value ==
+            formChangePass.querySelector('input[name="newPass"]').value) {
+            document.getElementById('errorRePass').style.color = 'green';
+            document.getElementById('errorRePass').innerText = 'matching';
+        } else {
+            document.getElementById('errorRePass').style.color = 'red';
+            document.getElementById('errorRePass').innerText = 'not matching';
+        }
+    }
+
+    function validate_password() {
+
+        var pass = formChangePass.querySelector('input[name="newPass"]').value;
+        var confirm_pass = formChangePass.querySelector('input[name="confirmPass"]').value
+        if (pass != confirm_pass) {
+            document.getElementById('errorRePass').style.color = 'red';
+            document.getElementById('errorRePass').innerHTML
+                = '☒ Use same password';
+            formChangePass.querySelector('button[name="button"]').disabled = true;
+            formChangePass.querySelector('button[name="button"]').style.opacity = (0.4);
+        } else {
+            document.getElementById('errorRePass').style.color = 'green';
+            document.getElementById('errorRePass').innerHTML =
+                '🗹 Password Matched';
+            formChangePass.querySelector('button[name="button"]').disabled = false;
+            formChangePass.querySelector('button[name="button"]').style.opacity = (1);
+        }
+    }
+</script>

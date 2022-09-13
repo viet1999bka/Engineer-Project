@@ -1,0 +1,45 @@
+﻿@model DATN.Models.Role
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Tạo mới vai trò</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Form tạo mới</h4>
+
+                <form id="form" class="forms-sample" asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div style="display:flex; flex-direction:row;">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label asp-for="RoleName" class="col-sm-3 col-form-label">Tên vai trò</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="RoleName" class="form-control" placeholder="Tên vai trò"  />
+                                    <span asp-validation-for="RoleName" class="text-danger">@TempData["name"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Description" class="col-sm-3 col-form-label">Mô tả</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="Description" class="form-control" placeholder="Mô tả" />
+                                    <span id="errorEmail" asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="btnsubmit" type="submit" class="btn btn-primary me-2">Tạo mới</button> |
+                    <a class="btn btn-secondary" asp-action="Index">Trở về</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

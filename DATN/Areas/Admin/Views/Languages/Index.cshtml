@@ -1,0 +1,117 @@
+﻿@model IEnumerable<DATN.Models.Language>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Quản lý danh sách ngôn ngữ lập trình</h1>
+<br />
+<p>
+    <a class="btn btn-inverse-primary btn-md" asp-action="Create">Create New</a>
+</p>
+<br />
+<div class="row">
+    <div class="col-3">
+        <input type="text" class="form-control" id="nameLang" name="nameLang" placeholder="Tìm kiếm exercise theo tên">
+    </div>
+
+</div>
+<br />
+
+<div class="row">
+    <div class="col-lg-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" style="max-width: 1160px;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Tên ngôn ngữ
+                                </th>
+                                <th>
+                                    Tên hiển thị
+                                </th>
+                                <th>
+                                    Đuôi của file
+                                </th>
+                                <th>
+                                    Mode client
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb-exercise-index">
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.LanguageId
+                                        </td>
+                                        <td>
+                                            @item.LanguageName
+                                        </td>
+                                        <td>
+                                            @item.LạnguageDisplay
+                                        </td>
+                                        <td>
+                                            @item.LanguageExten
+                                        </td>
+                                        <td>
+                                            @item.LanguageMode
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.LanguageId">Edit</a> |
+                                            <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-id="@item.LanguageId">Details</a> |
+                                            <a class="btn btn-inverse-danger btn-md" asp-action="Delete" asp-route-id="@item.LanguageId">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<br />
+
+
+
+
+@section Script {
+    <script>
+        $(document).ready(function () {
+
+            //Tìm kiếm theo tên
+            $("#nameLang").keyup(function () {
+                var strkeyword = $('#nameLang').val();
+                $.ajax({
+                    url: '/Admin/Search/FindLanguage/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#tb-exercise-index").html("");
+                        $("#tb-exercise-index").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}
+

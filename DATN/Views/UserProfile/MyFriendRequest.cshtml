@@ -1,0 +1,312 @@
+﻿
+@{
+    ViewData["Title"] = "MyFriendRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<CodeFriend> listMyFriendRequest = ViewBag.listMyFriendRequest;
+    List<CodeFriend> listMyFriendSend = ViewBag.listMyFriendSend;
+    Account friend = ViewBag.friend;
+}
+
+<div class="container">
+    <div class="home-profile">
+        <div class="grid wide pad-8">
+            <div class="home-profile--header">
+                <ul class="profile-nav__list flex1">
+                    <li class="profile-nav__item ">
+                        <a asp-action="Index" asp-controller="UserProfile" class="profile-nav__item--link">Overview</a>
+                    </li>
+                    <li class="profile-nav__item">
+                        <a asp-action="MyCodeFriend" asp-controller="UserProfile" class="profile-nav__item--link">CodeFriends</a>
+                    </li>
+                    <li class="profile-nav__item profile-nav__item--choose">
+                        <a asp-action="MyFriendRequest" asp-controller="UserProfile" class="profile-nav__item--link">
+                            Friend Request
+                            <span class="friend-request__number">@listMyFriendRequest.Count</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="home-profile--body">
+                <div class="friend-request__tab">
+                    <button class="friend-request__tablinks" onclick="openTab(event, 'Recieve')">Lời mời kết bạn</button>
+                    <button class="friend-request__tablinks" onclick="openTab(event, 'Send')">Yêu cầu kết bạn</button>
+                    <div class="friend-request__search">
+                        <form asp-action="SearchFriend" asp-controller="UserProfile" class="friend-request__search--form">
+                            <input id="emailSearch" name="email" type="text" class="friend-request__search--input">
+                            <button id="btn-search" type="submit" class="friend-request__search--btn-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="Recieve" class="friend-request__tab-content">
+                    <div class="code-friend__layout">
+                        @if (listMyFriendRequest.Count != 0)
+                        {
+                            int length = listMyFriendRequest.Count;
+                            for (int i = 0; i < length; i++)
+                            {
+                                <div class="code-friend__wrapper">
+                                    <div class="code-friend__item">
+                                        <div class="code-friend__item--infor">
+                                            <a asp-controller="Others" asp-action="Index" asp-route-id="@listMyFriendRequest[i].Friend.AccountId" style="display:
+                                                    flex;align-items: center;">
+                                                <div class="home-profile__user-box--avatar-wrap">
+                                                    <div class="home-profile__infor--item-avatar">
+                                                        <div class="home-profile__infor--item-avatar-img" style="background-image:
+                                                                url('../images/AccountAvatars/@listMyFriendRequest[i].Friend.Avatar.Trim()'
+                                                                );"></div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="code-friend__item--content">
+                                                <div class="code-friend__item-nameUser">@listMyFriendRequest[i].Friend.FullName.Trim()</div>
+                                                <div class="code-friend__item-exten">
+                                                    <div class="user-box__body--item">
+                                                        <img src="~/asset/image/80.svg" alt="">
+                                                    </div>
+                                                    <div class="user-box__body--item">
+                                                        <img src="~/asset/image/py3.svg" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a asp-controller="UserProfile" asp-action="AcceptFriendRequest" asp-route-id="@listMyFriendRequest[i].FriendId" style="text-decoration:
+                                                none;">
+                                            <div class="code-friend__item--btn
+                                                    code-friend__item--btn-addFriend">
+                                                <div class="code-friend__item--btn-icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </div>
+                                                Chấp nhận
+                                            </div>
+                                        </a>
+                                        <a asp-controller="UserProfile" asp-action="RefuseFriend" asp-route-id="@listMyFriendRequest[i].FriendId" style="text-decoration:
+                                                none;">
+                                            <div class="code-friend__item--btn
+                                                    code-friend__item--btn-request">
+                                                <div class="code-friend__item--btn-icon">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </div>
+                                                Từ chối
+                                            </div>
+                                        </a>
+                                    </div>
+                                    @if (++i < length)
+                                    {
+                                        i = i++;
+                                        <div class="code-friend__item">
+                                            <div class="code-friend__item--infor">
+                                                <a asp-controller="Others" asp-action="Index" asp-route-id="@listMyFriendRequest[i].Friend.AccountId" style="display:
+                                                    flex;align-items: center;">
+                                                    <div class="home-profile__user-box--avatar-wrap">
+                                                        <div class="home-profile__infor--item-avatar">
+                                                            <div class="home-profile__infor--item-avatar-img" style="background-image:
+                                                                url('../images/AccountAvatars/@listMyFriendRequest[i].Friend.Avatar.Trim()'
+                                                                );"></div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <div class="code-friend__item--content">
+                                                    <div class="code-friend__item-nameUser">@listMyFriendRequest[i].Friend.FullName.Trim()</div>
+                                                    <div class="code-friend__item-exten">
+                                                        <div class="user-box__body--item">
+                                                            <img src="~/asset/image/80.svg" alt="">
+                                                        </div>
+                                                        <div class="user-box__body--item">
+                                                            <img src="~/asset/image/py3.svg" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a asp-controller="UserProfile" asp-action="AcceptFriendRequest" asp-route-id="@listMyFriendRequest[i].FriendId" style="text-decoration:
+                                                none;">
+                                                <div class="code-friend__item--btn
+                                                    code-friend__item--btn-addFriend">
+                                                    <div class="code-friend__item--btn-icon">
+                                                        <i class="fa-solid fa-check"></i>
+                                                    </div>
+                                                    Chấp nhận
+                                                </div>
+                                            </a>
+                                            <a asp-controller="UserProfile" asp-action="RefuseFriend" asp-route-id="@listMyFriendRequest[i].FriendId" style="text-decoration:
+                                                none;">
+                                                <div class="code-friend__item--btn
+                                                    code-friend__item--btn-request">
+                                                    <div class="code-friend__item--btn-icon">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </div>
+                                                    Từ chối
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                    }
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+                <div id="Send" class="friend-request__tab-content">
+                    <div class="code-friend__layout">
+                        @if (listMyFriendSend.Count != 0)
+                        {
+                            int length = listMyFriendSend.Count;
+                            for (int i = 0; i < length; i++)
+                            {
+                                <div class="code-friend__wrapper">
+                                    <div class="code-friend__item">
+                                        <div class="code-friend__item--infor">
+                                            <a asp-controller="Others" asp-action="Index" asp-route-id="@listMyFriendSend[i].Friend.AccountId" style="display:
+                                                flex;align-items: center;">
+                                                <div class="home-profile__user-box--avatar-wrap">
+                                                    <div class="home-profile__infor--item-avatar">
+                                                        <div class="home-profile__infor--item-avatar-img" style="background-image:
+                                                            url('../images/AccountAvatars/@listMyFriendSend[i].Friend.Avatar.Trim()'
+                                                            );"></div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="code-friend__item--content">
+                                                <div class="code-friend__item-nameUser">@listMyFriendSend[i].Friend.FullName.Trim()</div>
+                                                <div class="code-friend__item-exten">
+                                                    <div class="user-box__body--item">
+                                                        <img src="~/asset/image/80.svg" alt="">
+                                                    </div>
+                                                    <div class="user-box__body--item">
+                                                        <img src="~/asset/image/py3.svg" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a asp-controller="UserProfile" asp-action="CancelFriend" asp-route-id="@listMyFriendSend[i].FriendId" style="text-decoration:
+                                            none;">
+                                            <div class="code-friend__item--btn
+                                                code-friend__item--btn-request">
+                                                <div class="code-friend__item--btn-icon">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </div>
+                                                Hủy lời mời kết bạn
+                                            </div>
+                                        </a>
+                                    </div>
+                                    @if (++i < length)
+                                    {
+                                        i = i++;
+                                        <div class="code-friend__item">
+                                            <div class="code-friend__item--infor">
+                                                <a asp-controller="Others" asp-action="Index" asp-route-id="@listMyFriendSend[i].Friend.AccountId" style="display:
+                                                flex;align-items: center;">
+                                                    <div class="home-profile__user-box--avatar-wrap">
+                                                        <div class="home-profile__infor--item-avatar">
+                                                            <div class="home-profile__infor--item-avatar-img" style="background-image:
+                                                            url('../images/AccountAvatars/@listMyFriendSend[i].Friend.Avatar.Trim()'
+                                                            );"></div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <div class="code-friend__item--content">
+                                                    <div class="code-friend__item-nameUser">@listMyFriendSend[i].Friend.FullName.Trim()</div>
+                                                    <div class="code-friend__item-exten">
+                                                        <div class="user-box__body--item">
+                                                            <img src="~/asset/image/80.svg" alt="">
+                                                        </div>
+                                                        <div class="user-box__body--item">
+                                                            <img src="~/asset/image/py3.svg" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a asp-controller="UserProfile" asp-action="CancelFriend" asp-route-id="@listMyFriendSend[i].FriendId" style="text-decoration:
+                                            none;">
+                                                <div class="code-friend__item--btn
+                                                code-friend__item--btn-request">
+                                                    <div class="code-friend__item--btn-icon">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </div>
+                                                    Hủy lời mời kết bạn
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+
+                            }
+                        }
+
+                    </div>
+                </div>
+                @if (ViewBag.Search == "Có")
+                {
+                    @if (friend != null)
+                    {
+                        <div id="Search" class="friend-request__tab-content" style="display: block;">
+                            <div class="code-friend__layout">
+                                <div class="code-friend__wrapper">
+                                    <div class="code-friend__item">
+                                        <div class="code-friend__item--infor">
+                                            <a style="display:
+                                                flex;align-items: center;">
+                                                <div class="home-profile__user-box--avatar-wrap">
+                                                    <div class="home-profile__infor--item-avatar">
+                                                        <div class="home-profile__infor--item-avatar-img" style="background-image:
+                                                            url('../images/AccountAvatars/@friend.Avatar.Trim()'
+                                                            );"></div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="code-friend__item--content">
+                                                <div class="code-friend__item-nameUser">@friend.FullName.Trim()</div>
+                                                <div class="code-friend__item-exten">
+                                                    <div class="user-box__body--item">
+                                                        <img src="~/asset/image/80.svg" alt="">
+                                                    </div>
+                                                    <div class="user-box__body--item">
+                                                        <img src="~/asset/image/py3.svg" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a asp-controller="Others" asp-action="Index" asp-route-id="@friend.AccountId" style="text-decoration:
+                                            none;">
+                                            <div class="code-friend__item--btn
+                                                code-friend__item--btn-friend">
+                                                View Profile
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="Search" class="friend-request__tab-content" style="display: block;">
+                            <div class="code-friend__layout">
+                                <div class="code-friend__no-found">
+                                    Không tìm thấy người dùng
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("friend-request__tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("friend-request__tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" friend-request__tablinks--active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " friend-request__tablinks--active";
+    }
+</script>

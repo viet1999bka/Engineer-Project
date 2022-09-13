@@ -1,0 +1,75 @@
+﻿@model DATN.Models.LanguageSupport
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Tạo mới ngôn ngữ hỗ trợ cho bài tập</h1>
+
+<br />
+<hr />
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Form tạo mới</h4>
+
+                <form id="form" class="forms-sample" asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" name="ExerciseId" value="@ViewBag.ExerciseId"/>
+                    <input asp-for="ExerciseId" value="@ViewBag.ExerciseId" type="hidden" />
+                    <div style="display:flex; flex-direction:row;">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Tên chủ đề</label>
+                                <div class="col-sm-9">
+                                    <input style="color:#000" required="required" disabled type="text" readonly class="form-control" value="@ViewBag.ChallengeName">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Tên bài tập</label>
+                                <div class="col-sm-9">
+                                    <input style="color:#000" required="required" disabled type="text" readonly class="form-control" value="@ViewBag.ExerciseName">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="LanguageId" class="col-sm-3 col-form-label">Ngôn ngữ</label>
+                                <div class="col-sm-9">
+                                    <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.LanguageId"></select>
+                                    <span asp-validation-for="LanguageId" class="text-danger">@TempData["Language"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="FileMain" class="col-sm-3 col-form-label">File code chính</label>
+                                <div class="col-sm-9">
+                                    <input type="file" id="fMain" name="fMain" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="FileFunction" class="col-sm-3 col-form-label">File hàm người dùng</label>
+                                <div class="col-sm-9">
+                                    <input type="file" id="fFuntion" name="fFuntion" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Description" class="col-sm-3 col-form-label">Mô tả thư viện</label>
+                                <div class="col-sm-9">
+                                    <input asp-for="Description" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button id="btnsubmit" type="submit" class="btn btn-primary me-2">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-ExerciseID="@ViewBag.ExerciseId" class="btn btn-inverse-warning btn-fw">Trở về</a>
+</div>
+

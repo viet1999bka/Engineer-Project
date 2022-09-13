@@ -1,0 +1,66 @@
+﻿@model DATN.Models.Experience
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Thêm kinh nghiệm làm việc</h1>
+<br />
+<h4>Tài khoản : @ViewBag.user</h4>
+<br />
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Thông tin chi tiết</h4>
+
+                <form class="forms-sample" asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="UserId" value="@ViewBag.userID" />
+                    <div class="form-group row">
+                        <label asp-for="Company" class="col-sm-3 col-form-label">Công ty</label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="Company" class="form-control" />
+                            <span asp-validation-for="Company" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="JobTitle" class="col-sm-3 col-form-label">Vị trí</label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="JobTitle" class="form-control" />
+                            <span asp-validation-for="JobTitle" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="JobLocation" class="col-sm-3 col-form-label">Địa chỉ</label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="JobLocation" class="form-control" />
+                            <span asp-validation-for="JobLocation" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="StartDate" class="col-sm-3 col-form-label">Thời gian bắt đầu</label>
+                        <div class="col-sm-9">
+                            <input type="date" asp-for="StartDate" class="form-control" />
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="EndDate" class="col-sm-3 col-form-label">Thời gian kết thúc</label>
+                        <div class="col-sm-9">
+                            <input type="date" asp-for="EndDate" class="form-control" />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                    <button asp-action="Index" asp-route-id="@ViewBag.userID" class="btn btn-dark">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

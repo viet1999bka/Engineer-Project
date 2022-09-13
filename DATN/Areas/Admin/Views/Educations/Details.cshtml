@@ -1,0 +1,84 @@
+﻿@model DATN.Models.Education
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Chi tiết thông tin học vấn</h1>
+
+<h4>Tài khoản : @ViewBag.user</h4>
+<br />
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Thông tin chi tiết</h4>
+
+                @if (Model != null)
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">ID tài khoản</label>
+                        <div class="col-sm-9">
+                            <p>@Model.User.AccountId</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-9">
+                            <p>@Model.User.Email</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Họ và tên</label>
+                        <div class="col-sm-9">
+                            <p>@Model.User.FullName</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="EducationId" class="col-sm-3 col-form-label">ID</label>
+                        <div class="col-sm-9">
+                            <p>@Model.EducationId</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="University" class="col-sm-3 col-form-label">Tên trường</label>
+                        <div class="col-sm-9">
+                            <p>@Model.University</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Degree" class="col-sm-3 col-form-label">Hệ bậc</label>
+                        <div class="col-sm-9">
+                            <p>@Model.Degree</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Subject" class="col-sm-3 col-form-label">Chuyên ngành</label>
+                        <div class="col-sm-9">
+                            <p>@Model.Subject</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="StartDate" class="col-sm-3 col-form-label">Thời gian bắt đầu</label>
+                        <div class="col-sm-9">
+                            <input type="date" asp-for="StartDate" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6;"/>
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="EndDate" class="col-sm-3 col-form-label">Thời gian kết thúc</label>
+                        <div class="col-sm-9">
+                            <input type="date" asp-for="EndDate" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6;"/>
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                }
+                <a asp-controller="Educations" asp-action="Index" asp-route-id="@Model.UserId" class="btn btn-dark">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+

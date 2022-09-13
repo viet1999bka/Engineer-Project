@@ -1,0 +1,154 @@
+﻿@model DATN.Models.Account
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Quản lý quản trị viên</h1>
+<h4>Tạo mới tài khoản</h4>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Form tạo mới</h4>
+
+                <form id="form" class="forms-sample" asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div style="display:flex; flex-direction:row;">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="Email" class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="Email" class="form-control" placeholder="Email">
+                                    <span id="errorEmail" asp-validation-for="Email" class="text-danger">@TempData["errorEmail"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Password" class="col-sm-3 col-form-label">Mật khẩu</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="password" asp-for="Password" class="form-control" placeholder="Nhập mật khẩu" required />
+                                    <span id="errorPass" asp-validation-for="Password" class="text-danger">@TempData["errorPass"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Nhập lại mật khẩu</label>
+                                <div class="col-sm-9">
+                                    <input id="Repassword" type="password" name="Repassword" class="form-control" placeholder="Nhập lại mật khẩu" required />
+                                    <span id="errorRePass" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="FullName" class="col-sm-3 col-form-label">Họ và tên</label>
+                                <div class="col-sm-9">
+                                    <input asp-for="FullName" class="form-control" placeholder="Họ và tên" />
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Phone" class="col-sm-3 col-form-label">Phone</label>
+                                <div class="col-sm-9">
+                                    <input type="tel" asp-for="Phone" class="form-control" placeholder="Số điện thoại" required />
+                                    <span id="errorPhone" asp-validation-for="Phone" class="text-danger">@TempData["errorPhone"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Address" class="col-sm-3 col-form-label">Địa chỉ</label>
+                                <div class="col-sm-9">
+                                    <input asp-for="Address" class="form-control" placeholder="Địa chỉ" />
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="BirthDay" class="col-sm-3 col-form-label">Ngày sinh</label>
+                                <div class="col-sm-9">
+                                    <input type="date" asp-for="BirthDay" class="form-control" placeholder="Ngày sinh" />
+                                    <span asp-validation-for="BirthDay" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="RoleId" class="col-sm-3 col-form-label">Vai trò</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control form-control-sm" asp-for="RoleId" asp-items="ViewBag.Role" style="width: 100%;">
+                                    </select>
+                                    <span asp-validation-for="RoleId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row" style="display: flex; flex-direction:column; align-items:center;">
+                                <img id="display_image" class="avatar-upload" src="~/images/AccountAvatars/default-avatar.png" />
+                                <br />
+                                <button type="button" class="btn btn-secondary btn-fw" onclick="removeAvatar()">Xóa ảnh</button>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Avatar" class="col-sm-3 col-form-label">Ảnh đại diện</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" name="fAvatar" id="fAvatar" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="btnsubmit" type="submit" class="btn btn-primary me-2">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-inverse-warning btn-fw">Back to List</a>
+</div>
+<script>
+
+    document.querySelector("#form").addEventListener("submit", function (evt) {
+        evt.preventDefault();
+        if (document.getElementById("password").value != document.getElementById("Repassword").value) {
+            document.getElementById("errorEmail").innerText = "";
+            document.getElementById("errorPass").innerText = "";
+            document.getElementById("errorPhone").innerText = "";
+
+            document.getElementById("errorRePass").innerText = "Mật khẩu không khớp";
+        }
+        else {
+            document.getElementById("form").submit();
+        }
+    })
+</script>
+
+<style>
+    .col-sm-3 col-form-label option {
+        width: 100%;
+        background-color: transparent;
+    }
+</style>
+<script>
+    const image_input = document.querySelector('#fAvatar');
+    const display_image = document.getElementById('display_image');
+
+    image_input.addEventListener("change", function () {
+        changeImage(this);
+    });
+
+    function changeImage(input) {
+        var reader;
+
+        if (input.files && input.files[0]) {
+            reader = new FileReader();
+
+            reader.onload = function (e) {
+                display_image.setAttribute('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+
+
+    }
+
+    function removeAvatar() {
+        image_input.value = null;
+        display_image.setAttribute('src', "../../images/AccountAvatars/default-avatar.png");
+    }
+</script>

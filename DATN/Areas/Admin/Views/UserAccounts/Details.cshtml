@@ -1,0 +1,150 @@
+﻿@model DATN.Models.Account
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Chi tiết tài khoản</h1>
+
+<div class="row">  
+    <div class="col-lg-12 grid-margin stretch-card layout-v" >
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Thông Tin Người Dùng</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group row" style="display: flex; flex-direction:column; align-items:center;">
+                            <img id="display_image" class="avatar-upload" src="~/images/AccountAvatars/@Model.Avatar.Trim()" />
+                            <br />
+                            <label class="col-sm-3 col-form-label" style="text-align:center;">Ảnh đại diện</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> Mô tả </th>
+                                <th> Chi tiết </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                <tr>
+                                    <td> 1 </td>
+                                    <td> ID Tài Khoản </td>
+                                    <td>@Model.AccountId</td>
+
+                                </tr>
+                                <tr>
+                                    <td> 2 </td>
+                                    <td> Email </td>
+                                    <td>@Model.Email</td>
+
+                                </tr>
+                                <tr>
+                                    <td> 3 </td>
+                                    <td> Họ và tên </td>
+                                    <td>@Model.FullName</td>
+
+                                </tr>
+                                <tr>
+                                    <td> 4 </td>
+                                    <td> Số điện thoại </td>
+                                    <td>@Model.Phone</td>
+
+                                </tr>
+                                <tr>
+                                    <td> 5 </td>
+                                    <td> Ngày sinh </td>
+                                    @if (Model.BirthDay.HasValue)
+                                    {
+                                        <td>
+                                            @{DateTime date = Model.BirthDay.Value;
+                                                String year = date.ToString("dd/MM/yyyy");
+                                            }
+                                            @year
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+
+                                </tr>
+                                <tr>
+                                    <td> 6 </td>
+                                    <td> Địa chỉ </td>
+                                    <td>@Model.Address</td>
+
+                                </tr>
+                                <tr>
+                                    <td> 7 </td>
+                                    <td> Tình trạng </td>
+                                    @if (!Model.Lock.Value == true)
+                                    {
+                                        <td>
+                                            <div class="form-check form-check-success">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" checked="checked"> Active <i class="input-helper"></i>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <div class="form-check form-check-danger">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" checked=""> Blocked <i class="input-helper"></i>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    }
+
+                                </tr>
+                                <tr>
+                                    <td> 8 </td>
+                                    <td> Ngày khởi tạo </td>
+                                    @if (Model.CreatedDate.HasValue)
+                                    {
+                                        <td>
+                                            @{DateTime date = Model.CreatedDate.Value;
+                                                String year = date.ToString("dd/MM/yyyy");
+                                            }
+                                            @year
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+
+                                </tr>
+
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer">
+                    <a class="btn btn-primary btn-md" asp-action="Index" asp-route-id="@Model.AccountId" asp-controller="Educations">Học vấn</a> |
+                    <a class="btn btn-info btn-fw" asp-action="Index" asp-route-id="@Model.AccountId" asp-controller="Experiences">Kinh nghiệm</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    
+</div>
+<div class="row">
+
+<div>
+    <a class="btn btn-success btn-md" asp-action="Edit" asp-route-id="@Model.AccountId">Edit</a> |
+    <a class="btn btn-warning btn-fw" asp-action="Index">Back to List</a>
+</div>

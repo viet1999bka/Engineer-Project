@@ -1,0 +1,33 @@
+﻿@model List<LanguageSupport>
+
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.LanguageSupId
+            </td>
+            <td>
+                @item.Exercise.Challenge.ChallengeName
+            </td>
+            <td>
+                @item.Exercise.ExcerciseName
+            </td>
+            <td>
+                @item.Language.LanguageName
+            </td>
+            <td style="white-space: normal;">
+                @item.FileMain
+            </td>
+            <td style="white-space: normal;">
+                @item.FileFunction
+            </td>
+            <td>
+                <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.LanguageSupId">Edit</a> |
+                <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-id="@item.LanguageSupId">Details</a> |
+                <a class="btn btn-inverse-danger btn-md" asp-action="Delete" asp-route-id="@item.LanguageSupId">Delete</a>
+            </td>
+        </tr>
+    }
+}

@@ -1,0 +1,80 @@
+﻿@model DATN.Models.Language
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Quản lý danh sách ngôn ngữ lập trình</h1>
+<br />
+<h4>Thông tin chi tiết</h4>
+<br />
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="LanguageId" />
+                <div style="display:flex; flex-direction:column;">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label asp-for="LanguageId" class="col-sm-3 col-form-label">ID</label>
+                            <div class="col-sm-9">
+                                <input id="languageMode" type="text" required="required" asp-for="LanguageId" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6; ">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label asp-for="LanguageName" class="col-sm-3 col-form-label">Tên ngôn ngữ</label>
+                            <div class="col-sm-9">
+                                <input id="languageMode" type="text" required="required" asp-for="LanguageName" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6; ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label asp-for="LạnguageDisplay" class="col-sm-3 col-form-label">Tên hiển thị</label>
+                            <div class="col-sm-9">
+                                <input id="languageMode" type="text" required="required" asp-for="LạnguageDisplay" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6; ">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label asp-for="LanguageExten" class="col-sm-3 col-form-label">Đuôi file code</label>
+                            <div class="col-sm-9">
+                                <input id="languageMode" type="text" required="required" asp-for="LanguageExten" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6; ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label asp-for="LanguageMode" class="col-sm-3 col-form-label">Mode client</label>
+                            <div class="col-sm-9">
+                                <input id="languageMode" type="text" required="required" asp-for="LanguageMode" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6; ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label asp-for="Version" class="col-sm-3 col-form-label">Chi tiết phiên bản</label>
+                            <div class="col-sm-9">
+                                <input id="languageMode" type="text" required="required" asp-for="Version" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6; ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-controller="Languages" asp-route-id="@Model.LanguageId" class="btn btn-inverse-primary btn-fw">Edit</a>|
+    <a asp-action="Index" class="btn btn-inverse-warning btn-fw">Back to List</a>
+</div>

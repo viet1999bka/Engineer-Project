@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DATN.Models.Role>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Danh sách vai trò của hệ thống</h1>
+
+<p>
+    <a class="btn btn-inverse-primary" asp-action="Create">Create New</a>
+</p>
+<br />
+<div class="row">
+    <div class="col-lg-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Tên vai trò
+                                </th>
+                                <th>
+                                    Mô tả chi tiết
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.RoleId
+                                        </td>
+                                        <td>
+                                            @item.RoleName
+                                        </td>
+
+                                        <td>
+                                            @item.Description
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.RoleId">Edit</a> |
+                                            <a class="btn btn-inverse-danger btn-md" asp-action="Delete" asp-route-id="@item.RoleId">Xóa</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

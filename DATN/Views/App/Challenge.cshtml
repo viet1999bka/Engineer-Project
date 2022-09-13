@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DATN.Models.Challenge>
+
+@{
+    ViewData["Title"] = "Challenge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="challenge">
+        <div class="challenge-inside">
+            <div class="challenge-body">
+                <div class="challenge-list">
+                    @if (Model != null)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <div class="challenge-item">
+                                <div class="chanllenge-wrapper">
+                                    <div class="challenge-card">
+                                        <a asp-action="ListExercise" asp-route-challengeId="@item.ChallengeId">
+                                            <img class="challenge-item__header" src="../images/challenges/@item.Thumb">
+                                            </img>
+                                            <div class="challenge-item__body">
+                                                <h4 class="challenge-item__name">@item.ChallengeName</h4>
+                                                <p class="challenge-item__total-task">Total task : @ViewData["totalchallenge" + item.ChallengeName]</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

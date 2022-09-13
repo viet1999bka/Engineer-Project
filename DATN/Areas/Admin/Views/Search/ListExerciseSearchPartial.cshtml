@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DATN.Models.Exercise>
+
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ExcerciseId
+            </td>
+            <td>
+                @item.Challenge.ChallengeName
+            </td>
+            <td>
+                @item.ExcerciseName
+            </td>
+            <td>
+                @item.Level.DifficultName
+            </td>
+            <td>
+                @item.Description
+            </td>
+
+            @if (item.CreateDate.HasValue)
+            {
+                <td>
+                    @{DateTime date = item.CreateDate.Value;
+                        String year = date.ToString("dd/MM/yyyy");
+                    }
+                    @year
+                </td>
+            }
+            else
+            {
+                <td>@item.CreateDate</td>
+            }
+            <td>
+                <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.ExcerciseId">Edit</a> |
+                <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-id="@item.ExcerciseId">Details</a> |
+                <a class="btn btn-inverse-danger btn-md" asp-action="Delete" asp-route-id="@item.ExcerciseId">Delete</a>
+            </td>
+        </tr>
+    }
+}

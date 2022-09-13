@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "ViewFile";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>ViewFile</h1>
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Nội dung file</h4>
+                <blockquote class="blockquote">
+                    @if(ViewBag.contentFile != null)
+                    {
+                        <span style="white-space: pre-line">@ViewBag.contentFile</span>
+                    }
+                </blockquote>
+                <a class="btn btn-outline-warning btn-fw" asp-action="Details" asp-route-id="@ViewBag.languageSupId">Trở về</a> | 
+                <a id="delete" class="btn btn-outline-danger btn-fw">Xóa file</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal">
+    <div class="modal__overlay js-modal__overlay"></div>
+    <div class="modal__body">
+        <div class="modal-confirm__delete">
+            <div class="modal-confirm__delete-header">
+                <i class="mdi mdi-bookmark-remove js-close"></i>
+            </div>
+            <div class="modal-confirm__delete-body">
+                <p>Bạn có chắc chắc muốn xóa không</p>
+            </div>
+            <div class="modal-confirm__delete-footer">
+                <a class="btn btn-inverse-danger btn-fw" asp-action="deleteFile" asp-route-path="@ViewBag.path" asp-route-id="@ViewBag.languageSupId" asp-route-kindFile="@ViewBag.kindFile">Có</a>
+                <a class="btn btn-inverse-primary btn-fw js-back">Không</a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+
+    var modal = document.querySelector(".modal");
+    var deletebtn = document.getElementById("delete");
+    var overlay = document.querySelector(".js-modal__overlay");
+    var close = document.querySelector(".js-close");
+    var back = document.querySelector(".js-back");
+
+    function showLogin() {
+        modal.classList.add('open-modal')
+    }
+
+    function closeModal() {
+        modal.classList.remove('open-modal')
+    }
+
+    deletebtn.addEventListener('click', showLogin)
+    overlay.addEventListener('click', closeModal)
+    close.addEventListener('click', closeModal)
+    back.addEventListener('click', closeModal)
+
+    
+</script>

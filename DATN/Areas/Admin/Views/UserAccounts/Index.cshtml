@@ -1,0 +1,189 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<DATN.Models.Account>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Quản lý tài khoản người dùng</h1>
+<br />
+<p>
+    <a class="btn btn-inverse-primary btn-md" asp-action="Create">Create New</a>
+</p>
+<br />
+
+<div class="row">
+    <div class="col-2">
+        <select class="custom-select" id="idstatus" name="idstatus" asp-items="ViewBag.lsTrangThai">
+            <option disabled selected>Chọn trạng thái</option>
+        </select>
+    </div>
+    <div class="col-3">
+        <input type="text" class="form-control" id="nameEmail" name="nameEmail" placeholder="Tìm kiếm theo email tài khoản">
+    </div>
+</div>
+<br />
+<div class="row">
+    
+
+    <div class="col-lg-12 stretch-card">
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Họ và tên
+                                </th>
+                                <th>
+                                    Số điện thoại
+                                </th>
+                                <th>
+                                    Tình trạng
+                                </th>
+                                <th>
+                                    Ngày tạo
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="records_table">
+                            @if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {
+                            <tr>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @item.FullName
+                                </td>
+                                <td>
+                                    @item.Phone
+                                </td>
+                                @if (!item.Lock.Value == true)
+                                {
+                                    <td>
+                                        <div class="form-check form-check-primary">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" checked="checked"> Active <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <div class="form-check form-check-danger">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" checked=""> Blocked <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                    </td>
+                                }
+
+                                @if (item.CreatedDate.HasValue)
+                                {
+                                    <td>
+                                        @{DateTime date = item.CreatedDate.Value;
+                                            String year = date.ToString("dd/MM/yyyy");
+                                        }
+                                        @year
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>@item.CreatedDate</td>
+                                }
+                                <td>
+                                    <a class="btn btn-inverse-success btn-md" asp-action="Edit" asp-route-id="@item.AccountId">Edit</a> |
+                                    <a class="btn btn-inverse-info btn-md" asp-action="Details" asp-route-id="@item.AccountId">Details</a> |
+                                    <a class="btn btn-inverse-danger btn-md" asp-action="Blocked" asp-route-id="@item.AccountId">Blocked</a>
+                                </td>
+                            </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br />        
+</div>
+
+<br />
+<div class="row">
+    <div class="col-lg-12 stretch-card">
+        <div aria-label="Page navigation example">
+            <ul class="pagination">
+                <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="UserAccounts" asp-action="Index" />
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    var statusSelected = @Html.Raw(Json.Serialize(ViewBag.CurrentStatus));
+    document.getElementById('idstatus').value = statusSelected;
+</script>
+
+<script>
+    $(document).ready(function () {
+        jQuery("#idstatus").change(function () {
+            var statusVal = jQuery(this).children(":selected").attr("value");
+            statusVal = parseFloat(statusVal);
+
+            $('#idstatus option').removeAttr('selected');
+            $("#idstatus > [value=" + statusVal + "]").attr("selected", "true");
+
+            $.ajax({
+                url: '/Admin/UserAccounts/Fitler',
+                datatype: "json",
+                type: "GET",
+                data: {
+                    status: statusVal
+                },
+                async: true,
+                success: function (results) {
+                    if (results.status == "success") {
+                        window.location.href = results.redirectUrl;
+                    }
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            })
+        });;
+
+        $("#nameEmail").keyup(function () {
+            var strkeyword = $('#nameEmail').val();
+            $.ajax({
+                url: '/Admin/Search/FindUserAccount',
+                datatype: "json",
+                type: "POST",
+                data: {
+                    keyword: strkeyword
+                },
+                async: true,
+                success: function (results) {
+                    $("#records_table").html("");
+                    $("#records_table").html(results);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            })
+        })
+    })
+</script>
+\\

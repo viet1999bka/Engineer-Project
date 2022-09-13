@@ -1,0 +1,524 @@
+﻿@model DATN.Models.Exercise
+
+@{
+    ViewData["Title"] = "CodePage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<TestCase> lstestCases = ViewBag.testCase;
+    List<Tuple<string, string>> resTestCase = ViewBag.resTestCase;
+    var numPubTest = 0;
+    if (resTestCase != null)
+    {
+        numPubTest = resTestCase.Count;
+    }
+    var library = ViewBag.libraryLanguage;
+    var listLibrary = library.Split("\n");
+    var nameLanguage = ViewBag.nameLanguage;
+    var versionLanguage = ViewBag.versionLanguage;
+    var timeLimit = Double.Parse(Model.TimeLimit) / 1000;
+}
+
+<div class="container--cExer flex1">
+    <div class="cExer full-height">
+        <div class="grid full-height">
+            <div class="row no-gutters ful-width full-height">
+                <div class="col c-4 layout-h full-height">
+                    <div class="cExer-left-bar">
+                        <div id="js-btn-des" class="cExer-left-bar__item" onclick="showDesExtra()">
+                            <div class="cExer-left-bar__item--inside">
+                                <div class="cExer-left-bar__item--img">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 10H8v2h8v-2zm0 4H8v2h8v-2zM6 20h12V9h-5V4H6v16z"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="js-btn-readme" class="cExer-left-bar__item" onclick="showReadmeExtra()">
+                            <div class="cExer-left-bar__item--inside">
+                                <div class="cExer-left-bar__item--img">
+                                    <i class="fa-brands fa-readme" style="font-size: 1.6rem;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="js-btn-set" class="cExer-left-bar__item" onclick="showSetExtra()">
+                            <div class="cExer-left-bar__item--inside">
+                                <div class="cExer-left-bar__item--img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 12v1l2 1.6c.2.2.3.5.2.7l-2 3.4a.6.6 0 01-.6.2l-2.5-1c-.6.4-1.1.8-1.7 1l-.4 2.7c0 .2-.2.4-.5.4h-4a.5.5 0 01-.5-.4l-.4-2.7c-.6-.2-1.1-.5-1.7-1L5 19h-.2c-.2 0-.4 0-.5-.2l-2-3.4c0-.3 0-.5.2-.7l2-1.6a8 8 0 010-2l-2-1.6a.5.5 0 01-.2-.7l2-3.4A.6.6 0 015 5l2.5 1c.6-.4 1.1-.8 1.7-1l.4-2.7c0-.2.3-.4.5-.4h4c.3 0 .5.2.5.4l.4 2.7c.6.2 1.1.6 1.7 1L19 5h.1c.2 0 .4 0 .5.2l2 3.4c0 .3 0 .5-.2.7l-2 1.6v1zm-2 0v-.7l-.2-1.2.9-.7 1-.8-.6-1.2-1.3.5-1 .4-1-.7-1.2-.7-1-.4-.2-1.2-.2-1.3h-1.4l-.2 1.3-.2 1.2-1 .4-1.3.7-.9.7-1-.4-1.3-.5-.7 1.2 1.1.8.9.7-.1 1.2a7.6 7.6 0 000 1.4V14l-.8.7-1 .8.6 1.2 1.3-.5 1-.4 1 .7 1.2.7 1 .4.2 1.1.2 1.4h1.4l.2-1.4.2-1 1-.5 1.3-.7.9-.7 1 .4 1.3.5.7-1.2-1.1-.8-.9-.7.2-1.2V12zM12 8a4 4 0 100 8 4 4 0 000-8zm-2 4c0 1.1.9 2 2 2a2 2 0 002-2 2 2 0 00-2-2 2 2 0 00-2 2z"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="cExer-task full-height">
+                        <div class="cExer-task-panel">
+                            <div class="cExer-task__inside js-question-ex">
+                                <div class="cExer-task__header">
+                                    <div class="cExer-task__header--item">
+                                        <div class="cExer-task__header--icon">
+                                            <svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16zm-1.43-3c-1.642-.344-2.462-1.136-2.462-2.376V9.612c0-.688-.37-1.032-1.108-1.032V7.42c.739 0 1.108-.346 1.108-1.037V5.31c.013-.613.225-1.11.636-1.487.414-.378 1.023-.653 1.825-.823L7 3.9c-.574.163-.873.621-.896 1.374v1.109c0 .763-.421 1.301-1.265 1.615.844.313 1.265.853 1.265 1.62v1.103c.023.753.322 1.211.896 1.374L6.57 13zm2.86 0c1.642-.344 2.462-1.136 2.462-2.376V9.612c0-.688.37-1.032 1.108-1.032V7.42c-.739 0-1.108-.346-1.108-1.037V5.31c-.013-.613-.225-1.11-.636-1.487-.414-.378-1.023-.653-1.825-.823L9 3.9c.574.163.873.621.896 1.374v1.109c0 .763.421 1.301 1.265 1.615-.844.313-1.265.853-1.265 1.62v1.103c-.023.753-.322 1.211-.896 1.374l.43.905z"></path></svg>
+                                        </div>
+                                        <p class="cExer-task__header--title">Codewriting</p>
+                                    </div>
+                                    <div class="cExer-task__header--item mgl-16">
+                                        <div class="cExer-task__header--icon">
+                                            <svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16zm-1.43-3c-1.642-.344-2.462-1.136-2.462-2.376V9.612c0-.688-.37-1.032-1.108-1.032V7.42c.739 0 1.108-.346 1.108-1.037V5.31c.013-.613.225-1.11.636-1.487.414-.378 1.023-.653 1.825-.823L7 3.9c-.574.163-.873.621-.896 1.374v1.109c0 .763-.421 1.301-1.265 1.615.844.313 1.265.853 1.265 1.62v1.103c.023.753.322 1.211.896 1.374L6.57 13zm2.86 0c1.642-.344 2.462-1.136 2.462-2.376V9.612c0-.688.37-1.032 1.108-1.032V7.42c-.739 0-1.108-.346-1.108-1.037V5.31c-.013-.613-.225-1.11-.636-1.487-.414-.378-1.023-.653-1.825-.823L9 3.9c.574.163.873.621.896 1.374v1.109c0 .763.421 1.301 1.265 1.615-.844.313-1.265.853-1.265 1.62v1.103c-.023.753-.322 1.211-.896 1.374l.43.905z"></path></svg>
+                                        </div>
+                                        <p class="cExer-task__header--title">300</p>
+                                    </div>
+                                </div>
+                                <div class="cExer-task__body">
+                                    <p>@Model.Description</p>
+                                    <p><span class="markdown--header" style="color:#2b3b52;font-size:1.4em">Example</span></p>
+                                    <p>
+                                        @Model.Example
+                                    </p>
+                                    <p><span class="markdown--header" style="color:#2b3b52;font-size:1.4em">Input/Output</span></p>
+                                    <ul>
+                                        <li>
+                                            <p><strong>[Thời gian giới hạn] (@timeLimit) seconds (c)</strong></p>
+                                        </li>
+                                        <li>
+                                            <p><strong>[input] </strong></p>
+                                            <p>
+                                                <em>Điều kiện đầu vào:</em><br>
+                                                <code>@Model.Input</code>
+                                            </p>
+                                        </li>
+   
+                                        <li>
+                                            <p><strong>[output] </strong></p>
+                                            <p>@Model.Output</p>
+                                </div>
+                            </div>
+                            <div class="cExer-task__inside js-readme close">
+                                <div class="cExer-task__header" style="display: flex; flex-direction:column;">
+                                    <h1>Ngôn ngữ :<span id="nameLanguage">@nameLanguage</span> </h1>
+                                    <p>Phiên bản : <span id="versionLanguage">@versionLanguage</span></p>
+                                </div>
+                                <div class="cExer-task__body">
+                                    <h2>Thư viện sử dụng</h2>
+                                    <div id="lsLibrary">
+                                        @if (listLibrary != null)
+                                        {
+                                            foreach (var item in listLibrary)
+                                            {
+                                                <code style="margin:0; padding:0; font-size: 1.4rem;">
+                                                    @item
+                                                </code>
+                                            }
+                                        }
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="cExer-task__inside js-setting-ex close">
+                                <h1 class="cExer-task__setting--title">
+                                    Setting
+                                </h1>
+                                <div class="cExer-setting__list">
+                                    <h4 class="cExer-setting__list--title">Fomartting</h4>
+                                    <div class="cExer-setting__item">
+                                        <div class="cExer-setting__item-name">Editor Mode</div>
+                                        <div class="cExer-setting__select-mode">
+                                            <select id="edit_mode">
+                                                <option value="ace/keyboard/vim">VIM</option>
+                                                <option value="ace/keyboard/emacs">Emacs </option>
+                                                <option value="ace/keyboard/vscode">VS Code</option>
+                                                <option value="ace/keyboard/sublime">Sublime</option>
+
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="cExer-setting__item">
+                                        <div class="cExer-setting__item-name">Theme</div>
+                                        <div class="cExer-setting__select-mode">
+                                            <select id="edit_theme">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="cExer-setting__item">
+                                        <div class="cExer-setting__item-name">FontSize</div>
+                                        <div class="cExer-setting__select-mode">
+                                            <select id="edit_font">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col flex1 layout-v">
+                    <form class="cExer-code-side" asp-controller="App" asp-action="CodePage" id="form" method="post">
+                        <input type="hidden" name="exerciseId" id="exerciseId" value="@Model.ExcerciseId" />
+                        <input type="hidden" name="languageMode" id="languageMode" />
+                        <div class="cExer-code-side">
+                            <div class="cExer-code-editor">
+                                <div class="cExer-code_language">
+                                    <div class="cExer-code__label">Chọn ngôn ngữ</div>
+                                    <select name="" id="edit_language">
+                                    </select>
+                                </div>
+                                <pre id="editor" style="width: 100%;"></pre>
+                                <textarea name = "codeSubmit" id ="codeSubmit" class="cExer-code-editor__input" cols="30" rows="10" style="display: none;">@ViewBag.CodeSub</textarea>
+                            </div>
+                            <div class="cExer-code-side__infor">
+                                <div class="cExer-code-side__content">
+                                    <div class="cExer-code-side__tablist">
+                                        <div class="cExer-code-side__tabwrapper">
+                                            <div class="cExer-code-side__tab--test">
+                                                <div class="cExer-code-side__tab--text">
+                                                    TEST
+                                                </div>
+                                            </div>
+                                            <div class="cExer-code-side__btn-side">
+                                                <div class="cExer-code-side__btn-wrap">
+                                                    <button type="submit" id="runtest_btn" class="cExer-code__run-btn">
+                                                        <div class="cExer-code__btn-inside">
+                                                            <div class="cExer-code__btn-icon">
+                                                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4-8l-6 4.5v-9l6 4.5z"></path></svg>
+                                                            </div>
+                                                            <span>Run tests</span>
+                                                        </div>
+                                                    </button>
+                                                    <button type="submit" id="submit_btn" class="cExer-code__submit-btn">
+                                                        <div class="cExer-code__btn-inside">
+                                                            <div class="cExer-code__btn-icon">
+                                                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4-8l-6 4.5v-9l6 4.5z"></path></svg>
+                                                            </div>
+                                                            <span>SUBMIT</span>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="inputSubmit" id="inputSubmit" />
+                                        </div>
+
+                                    </div>
+
+                                    @if (ViewData["numRight"] != null)
+                                    {
+                                        if (ViewData["numRight"] == "Failed all test")
+                                        {
+                                            <span class="cExer-code-side__result" style="color:red;">@ViewBag.numRight test</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="cExer-code-side__result">Trả lới đúng : @ViewBag.numRight test</span>
+                                        }
+                                    }
+
+                                    <div class="cExer-code-side__testcase">
+                                        <div class="cExer-code-side__testcase-inside">
+                                            @if (ViewData["testCase"] != null)
+                                            {
+                                                var num = 1;
+                                                @foreach (var item in lstestCases)
+                                                {
+                                                    if (item.Status == false)
+                                                    {
+                                                        <div class="cExer-code-side__test-item">
+                                                            <div class="cExer-code-side__test-title">
+                                                                <div class="cExer-code-side__test-icon">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24"><path d="M.44 6.22L12 17.78 23.56 6.22H.44z"></path></svg>
+                                                                </div>
+                                                                <div class="cExer-code-side__test-infor">
+                                                                    Test @num
+                                                                    <div class="cExer-code-side__test-beauti">
+                                                                        @if (resTestCase != null)
+                                                                        {
+                                                                            @if ((num - 1) < numPubTest)
+                                                                            {
+                                                                                @if (resTestCase[num - 1].Item2 == "true")
+                                                                                {
+                                                                                    <i class="fa-solid fa-circle-check testcase-icon testcase-icon--success"></i>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <i class="fa-solid fa-triangle-exclamation testcase-icon testcase-icon--false"></i>
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        <div class="cExer-code-side__test-beauti-icon">
+                                                                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4-8l-6 4.5v-9l6 4.5z"></path></svg>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="cExer-code-side__test-content">
+                                                                <div class="cExer-code-side__test-labels">Đầu vào: </div>
+                                                                <div class="cExer-code-side__test-value">
+                                                                    @item.Input
+                                                                </div>
+                                                            </div>
+                                                            <div class="cExer-code-side__test-content">
+                                                                <div class="cExer-code-side__test-labels">Đầu ra: </div>
+                                                                <div class="cExer-code-side__test-value">
+                                                                    @item.Output
+                                                                </div>
+                                                            </div>
+                                                            @if (resTestCase != null)
+                                                            {
+                                                                @if (num-1 < numPubTest)
+                                                                {
+                                                                    <div class="cExer-code-side__test-content">
+                                                                        <div class="cExer-code-side__test-labels">Trả lời: </div>
+                                                                        <div class="cExer-code-side__test-value">
+                                                                            @resTestCase[num-1].Item1
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="cExer-code-side__test-item">
+                                                            <div class="cExer-code-side__test-title">
+                                                                <div class="cExer-code-side__test-icon" style="transform: rotate(-90deg);">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24"><path d="M.44 6.22L12 17.78 23.56 6.22H.44z"></path></svg>
+                                                                </div>
+                                                                <div class="cExer-code-side__test-infor">
+                                                                    Test @num
+                                                                    <div class="cExer-code-side__test-beauti">
+                                                                        <div class="cExer-code-side__test-beauti-icon">
+                                                                            <svg viewBox="0 0 24 24"><path d="M18.81 8.018h-1.135V5.742c0-3.14-2.542-5.69-5.675-5.69s-5.675 2.55-5.675 5.69v2.276H5.19a2.272 2.272 0 0 0-2.27 2.275v11.379a2.272 2.272 0 0 0 2.27 2.275h13.62a2.272 2.272 0 0 0 2.27-2.275V10.293a2.272 2.272 0 0 0-2.27-2.275zM12 18.258a2.272 2.272 0 0 1-2.27-2.276A2.272 2.272 0 0 1 12 13.707a2.272 2.272 0 0 1 2.27 2.275A2.272 2.272 0 0 1 12 18.258zm3.518-10.24H8.482V5.742A3.526 3.526 0 0 1 12 2.215a3.526 3.526 0 0 1 3.519 3.527v2.276z"></path></svg>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    num++;
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+<script>
+    const extra_des = document.querySelector('.js-question-ex');
+    const extra_set = document.querySelector('.js-setting-ex');
+    const extra_readme = document.querySelector('.js-readme');
+    var btn_set = document.getElementById('js-btn-set');
+    var btn_des = document.getElementById('js-btn-des');
+    var btn_readme = document.getElementById('js-btn-readme');
+
+    function showDesExtra() {
+        extra_set.classList.add('close');
+        extra_readme.classList.add('close');
+        extra_des.classList.remove('close');
+        btn_des.style.backgroundColor = "#004ae1";
+        btn_readme.style.backgroundColor = "#1d2631";
+        btn_set.style.backgroundColor = "#1d2631";
+    }
+    function showReadmeExtra() {
+        extra_des.classList.add('close');
+        extra_set.classList.add('close');
+        extra_readme.classList.remove('close');
+        btn_des.style.backgroundColor = "#1d2631";
+        btn_set.style.backgroundColor = "#1d2631";
+        btn_readme.style.backgroundColor = "#004ae1";
+    }
+    function showSetExtra() {
+        extra_des.classList.add('close');
+        extra_readme.classList.add('close');
+        extra_set.classList.remove('close');
+        btn_des.style.backgroundColor = "#1d2631";
+        btn_readme.style.backgroundColor = "#1d2631";
+        btn_set.style.backgroundColor = "#004ae1";
+    }
+</script>
+<script src="~/lib/ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var themeData = [
+        ["Chrome"],
+        ["Clouds"],
+        ["Crimson Editor"],
+        ["Dawn"],
+        ["Dreamweaver"],
+        ["Eclipse"],
+        ["GitHub"],
+        ["IPlastic"],
+        ["Solarized Light"],
+        ["TextMate"],
+        ["Tomorrow"],
+        ["XCode"],
+        ["Kuroir"],
+        ["KatzenMilch"],
+        ["SQL Server", "sqlserver", "light"],
+        ["Ambiance", "ambiance", "dark"],
+        ["Chaos", "chaos", "dark"],
+        ["Clouds Midnight", "clouds_midnight", "dark"],
+        ["Dracula", "dracula", "dark"],
+        ["Cobalt", "cobalt", "dark"],
+        ["Gruvbox", "gruvbox", "dark"],
+        ["Green on Black", "gob", "dark"],
+        ["idle Fingers", "idle_fingers", "dark"],
+        ["krTheme", "kr_theme", "dark"],
+        ["Merbivore", "merbivore", "dark"],
+        ["Merbivore Soft", "merbivore_soft", "dark"],
+        ["Mono Industrial", "mono_industrial", "dark"],
+        ["Monokai", "monokai", "dark"],
+        ["Nord Dark", "nord_dark", "dark"],
+        ["One Dark", "one_dark", "dark"],
+        ["Pastel on dark", "pastel_on_dark", "dark"],
+        ["Solarized Dark", "solarized_dark", "dark"],
+        ["Terminal", "terminal", "dark"],
+        ["Tomorrow Night", "tomorrow_night", "dark"],
+        ["Tomorrow Night Blue", "tomorrow_night_blue", "dark"],
+        ["Tomorrow Night Bright", "tomorrow_night_bright", "dark"],
+        ["Tomorrow Night 80s", "tomorrow_night_eighties", "dark"],
+        ["Twilight", "twilight", "dark"],
+        ["Vibrant Ink", "vibrant_ink", "dark"]
+    ];
+    for (var i = 0; i < themeData.length; i++) {
+        var x = document.getElementById('edit_theme');
+        var value = value ? themeData[i][1] : themeData[i][0];
+        var option = new Option(themeData[i][0], value);
+        x.appendChild(option);
+    }
+
+
+
+    var fontData = [
+        ["14"],
+        ["16"],
+        ["18"],
+        ["20"],
+        ["22"],
+        ["24"],
+    ];
+    var x = document.getElementById('edit_font');
+    for (var i = 0; i < fontData.length; i++) {
+        var option = new Option(fontData[i][0], fontData[i][0]);
+        x.appendChild(option);
+    }
+    var modeData = JSON.parse('@Html.Raw(Json.Serialize(ViewData["modeData"]))');
+    for (var key in modeData) {
+        var x = document.getElementById('edit_language');
+        var option = new Option(key, modeData[key]);
+        x.appendChild(option);
+    }
+
+    for (var i = 0; i < modeData.length; i++) {
+        var x = document.getElementById('edit_language');
+        var option = new Option(modeData[i][0], modeData[i][1]);
+        x.appendChild(option);
+    }
+
+</script>
+<script>
+    var editor = ace.edit("editor");
+    var textarea = ('textarea[name="codeSubmit"]');
+    var defaultMode = JSON.parse('@Html.Raw(Json.Serialize(ViewData["DefaultMode"]))');
+    if (defaultMode != "") {
+        editor.session.setMode("ace/mode/" + defaultMode);
+        document.getElementById('edit_language').value = defaultMode;
+    }
+
+    document.getElementById('languageMode').value = document.getElementById('edit_language').value;
+    document.getElementById('edit_theme').value = "dracula";
+    editor.setTheme("ace/theme/dracula");
+
+
+    document.getElementById('edit_theme').addEventListener('change', function () {
+        var nameTheme = this.value;
+        nameTheme = nameTheme.replace(/ /g, "_").toLowerCase();
+        var theme = "ace/theme/" + nameTheme;
+        console.log(nameTheme);
+        editor.setTheme(theme);
+
+    })
+
+    document.getElementById('edit_font').addEventListener('change', function () {
+        editor.setFontSize(parseInt(this.value))
+    })
+
+    document.getElementById('edit_mode').addEventListener('change', function () {
+        editor.setKeyboardHandler(this.value)
+        console.log('ace/keyboard/' + this.value)
+    })
+
+    document.getElementById('edit_language').addEventListener('change', function () {
+        var namelanguage = this.value;
+        namelanguage = namelanguage.replace(/ /g, "_").toLowerCase();
+        var language = "ace/mode/" + namelanguage;
+        document.getElementById('languageMode').value = namelanguage;
+        editor.session.setMode(language);
+    })
+
+    var codeSub = document.getElementById("codeSubmit");
+    editor.setValue(codeSub.value, 1);
+
+
+    // Gửi dữ liệu
+    document.getElementById("submit_btn").addEventListener("click", function (event) {
+        event.preventDefault();
+        var codeSend = editor.getValue();
+        document.getElementById("codeSubmit").value = codeSend;
+        document.getElementById("inputSubmit").value = "submit";
+        document.getElementById("form").submit();
+    });
+
+    document.getElementById("runtest_btn").addEventListener("click", function (event) {
+        event.preventDefault();
+        var codeSend = editor.getValue();
+        document.getElementById("codeSubmit").value = codeSend;
+        document.getElementById("inputSubmit").value = "runtest";
+        document.getElementById("form").submit();;
+    });
+</script>
+
+@* ajax chọn ngôn ngữ  *@
+
+
+<script>
+    $(document).ready(function () {
+        jQuery('#edit_language').change(function () {
+            var languageMode = $("#edit_language option:selected").val();
+            var id = @Html.Raw(Json.Serialize(Model.ExcerciseId));
+ 
+            $.ajax({
+                url: '/App/GetCodeSubmit',
+                datatype: "json",
+                type: "GET",
+                data: {
+                    language: languageMode,
+                    exerciseID: id
+                },
+                async: true,
+                success: function (results) {
+                    editor.session.setValue(results.codeSub, 1);
+                    editor.session.setMode(results.modeEdit)
+                    $('#nameLanguage').text(results.name);
+                    $('#versionLanguage').text(results.version);
+                    if (results.html != null) {
+                        var str = '';
+                        $.each(results.html, function (index, value) {
+                            str += '<p>' + value.replace('<', "'").replace('>', "'") + '</p>';
+                        });
+
+                        $('#lsLibrary').html(str);
+                        
+                    }
+                },
+                error: function (xhr) {
+                    alert("error");
+                }
+            });
+        });
+
+
+    });
+</script>

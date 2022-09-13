@@ -1,0 +1,87 @@
+﻿@model DATN.Models.Exercise
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Quản lý bài tâp</h1>
+<h4>Tạo mới bài tập</h4>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Form tạo mới</h4>
+
+                <form id="form" class="forms-sample" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div style="display:flex; flex-direction:row;">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label asp-for="ExcerciseName" class="col-sm-3 col-form-label">Tên bài tập</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="ExcerciseName" class="form-control" placeholder="Tên bài tập">
+                                    <span asp-validation-for="ExcerciseName" class="text-danger">@TempData["errorName"]</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="ChallengeId" class="col-sm-3 col-form-label">Chủ đề</label>
+                                <div class="col-sm-9">
+                                    <select asp-for="ChallengeId" class="form-control" asp-items="ViewBag.ChallengeId"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="LevelId" class="col-sm-3 col-form-label">Độ khó</label>
+                                <div class="col-sm-9">
+                                    <select asp-for="LevelId" class="form-control" asp-items="ViewBag.LevelId"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Description" class="col-sm-3 col-form-label">Đề bài</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="Description" class="form-control" placeholder="Đề bài">
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Example" class="col-sm-3 col-form-label">Mô tả dữ liệu vào ra</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="Example" class="form-control" placeholder="Mô tả dữ liệu vào ra">
+                                    <span asp-validation-for="Example" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Input" class="col-sm-3 col-form-label">Mẫu đầu vào</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="Input" class="form-control" placeholder="Mẫu đầu vào">
+                                    <span asp-validation-for="Input" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Output" class="col-sm-3 col-form-label">Mẫu đầu ra</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="Output" class="form-control" placeholder="Mẫu đầu ra">
+                                    <span asp-validation-for="Output" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="TimeLimit" class="col-sm-3 col-form-label">Thời gian giới hạn(mili giây)</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="TimeLimit" class="form-control" placeholder="500">
+                                    <span asp-validation-for="TimeLimit" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button id="btnsubmit" type="submit" class="btn btn-primary me-2">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-inverse-warning btn-fw">Back to List</a>
+</div>

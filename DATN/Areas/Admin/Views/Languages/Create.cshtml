@@ -1,0 +1,323 @@
+﻿@model DATN.Models.Language
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Quản lý danh sách ngôn ngữ lập trình</h1>
+<br />
+<h4>Thêm ngôn ngữ lập trình mới</h4>
+<br />
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Form tạo mới</h4>
+
+                <form id="form" class="forms-sample" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div style="display:flex; flex-direction:column;">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="LanguageName" class="col-sm-3 col-form-label">Tên ngôn ngữ</label>
+                                <div class="col-sm-9">
+                                    <select id="languageName" class="js-example-basic-single form-control" asp-for="LanguageName">
+                                    </select>
+                                    <span asp-validation-for="LanguageName" class="text-danger">@TempData["errorName"]</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="LạnguageDisplay" class="col-sm-3 col-form-label">Tên hiển thị</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="LạnguageDisplay" class="form-control">
+                                    <span asp-validation-for="LạnguageDisplay" class="text-danger">@TempData["errorDisplay"]</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="LanguageExten" class="col-sm-3 col-form-label">Đuôi của file</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="LanguageExten" class="form-control">
+                                    <span asp-validation-for="LanguageExten" class="text-danger">@TempData["errorExten"]</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="LanguageMode" class="col-sm-3 col-form-label">Mode client</label>
+                                <div class="col-sm-9">
+                                    <input id="languageMode" type="text" required="required" asp-for="LanguageMode" class="form-control" readonly style=" background-color: #2A3038; opacity:0.6; ">
+                                    <span asp-validation-for="LanguageMode" class="text-danger">@TempData["errorMode"]</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label asp-for="Version" class="col-sm-3 col-form-label">Chi tiết phiên bản</label>
+                                <div class="col-sm-9">
+                                    <input type="text" required="required" asp-for="Version" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <button id="btnsubmit" type="submit" class="btn btn-primary me-2">Submit</button>
+
+                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-inverse-warning btn-fw">Back to List</a>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2();
+    });
+</script>
+
+<script>
+    var supportedModes = {
+        ABAP: ["abap"],
+        ABC: ["abc"],
+        ActionScript: ["as"],
+        ADA: ["ada|adb"],
+        Alda: ["alda"],
+        Apache_Conf: ["^htaccess|^htgroups|^htpasswd|^conf|htaccess|htgroups|htpasswd"],
+        Apex: ["apex|cls|trigger|tgr"],
+        AQL: ["aql"],
+        AsciiDoc: ["asciidoc|adoc"],
+        ASL: ["dsl|asl|asl.json"],
+        Assembly_x86: ["asm|a"],
+        AutoHotKey: ["ahk"],
+        BatchFile: ["bat|cmd"],
+        c_Cpp: ["cpp|c|cc|cxx|h|hh|hpp|ino"],
+        C_Cpp: ["cpp|c|cc|cxx|h|hh|hpp|ino"],
+        C9Search: ["c9search_results"],
+        Cirru: ["cirru|cr"],
+        Clojure: ["clj|cljs"],
+        Cobol: ["CBL|COB"],
+        coffee: ["coffee|cf|cson|^Cakefile"],
+        ColdFusion: ["cfm"],
+        Crystal: ["cr"],
+        CSharp: ["cs"],
+        Csound_Document: ["csd"],
+        Csound_Orchestra: ["orc"],
+        Csound_Score: ["sco"],
+        CSS: ["css"],
+        Curly: ["curly"],
+        D: ["d|di"],
+        Dart: ["dart"],
+        Diff: ["diff|patch"],
+        Dockerfile: ["^Dockerfile"],
+        Dot: ["dot"],
+        Drools: ["drl"],
+        Edifact: ["edi"],
+        Eiffel: ["e|ge"],
+        EJS: ["ejs"],
+        Elixir: ["ex|exs"],
+        Elm: ["elm"],
+        Erlang: ["erl|hrl"],
+        Forth: ["frt|fs|ldr|fth|4th"],
+        Fortran: ["f|f90"],
+        FSharp: ["fsi|fs|ml|mli|fsx|fsscript"],
+        FSL: ["fsl"],
+        FTL: ["ftl"],
+        Gcode: ["gcode"],
+        Gherkin: ["feature"],
+        Gitignore: ["^.gitignore"],
+        Glsl: ["glsl|frag|vert"],
+        Gobstones: ["gbs"],
+        golang: ["go"],
+        GraphQLSchema: ["gql"],
+        Groovy: ["groovy"],
+        HAML: ["haml"],
+        Handlebars: ["hbs|handlebars|tpl|mustache"],
+        Haskell: ["hs"],
+        Haskell_Cabal: ["cabal"],
+        haXe: ["hx"],
+        Hjson: ["hjson"],
+        HTML: ["html|htm|xhtml|vue|we|wpy"],
+        HTML_Elixir: ["eex|html.eex"],
+        HTML_Ruby: ["erb|rhtml|html.erb"],
+        INI: ["ini|conf|cfg|prefs"],
+        Io: ["io"],
+        Ion: ["ion"],
+        Jack: ["jack"],
+        Jade: ["jade|pug"],
+        Java: ["java"],
+        JavaScript: ["js|jsm|jsx|cjs|mjs"],
+        JSON: ["json"],
+        JSON5: ["json5"],
+        JSONiq: ["jq"],
+        JSP: ["jsp"],
+        JSSM: ["jssm|jssm_state"],
+        JSX: ["jsx"],
+        Julia: ["jl"],
+        Kotlin: ["kt|kts"],
+        LaTeX: ["tex|latex|ltx|bib"],
+        Latte: ["latte"],
+        LESS: ["less"],
+        Liquid: ["liquid"],
+        Lisp: ["lisp"],
+        LiveScript: ["ls"],
+        Log: ["log"],
+        LogiQL: ["logic|lql"],
+        LSL: ["lsl"],
+        Lua: ["lua"],
+        LuaPage: ["lp"],
+        Lucene: ["lucene"],
+        Makefile: ["^Makefile|^GNUmakefile|^makefile|^OCamlMakefile|make"],
+        Markdown: ["md|markdown"],
+        Mask: ["mask"],
+        MATLAB: ["matlab"],
+        Maze: ["mz"],
+        MediaWiki: ["wiki|mediawiki"],
+        MEL: ["mel"],
+        MIPS: ["s|asm"],
+        MIXAL: ["mixal"],
+        MUSHCode: ["mc|mush"],
+        MySQL: ["mysql"],
+        Nginx: ["nginx|conf"],
+        Nim: ["nim"],
+        Nix: ["nix"],
+        NSIS: ["nsi|nsh"],
+        Nunjucks: ["nunjucks|nunjs|nj|njk"],
+        ObjectiveC: ["m|mm"],
+        OCaml: ["ml|mli"],
+        PartiQL: ["partiql|pql"],
+        Pascal: ["pas|p"],
+        Perl: ["pl|pm"],
+        pgSQL: ["pgsql"],
+        PHP_Laravel_blade: ["blade.php"],
+        PHP: ["php|inc|phtml|shtml|php3|php4|php5|phps|phpt|aw|ctp|module"],
+        Pig: ["pig"],
+        Powershell: ["ps1"],
+        Praat: ["praat|praatscript|psc|proc"],
+        Prisma: ["prisma"],
+        Prolog: ["plg|prolog"],
+        Properties: ["properties"],
+        Protobuf: ["proto"],
+        Puppet: ["epp|pp"],
+        Python: ["py"],
+        QML: ["qml"],
+        R: ["r"],
+        Raku: ["raku|rakumod|rakutest|p6|pl6|pm6"],
+        Razor: ["cshtml|asp"],
+        RDoc: ["Rd"],
+        Red: ["red|reds"],
+        RHTML: ["Rhtml"],
+        RST: ["rst"],
+        Ruby: ["rb|ru|gemspec|rake|^Guardfile|^Rakefile|^Gemfile"],
+        Rust: ["rs"],
+        SaC: ["sac"],
+        SASS: ["sass"],
+        SCAD: ["scad"],
+        Scala: ["scala|sbt"],
+        Scheme: ["scm|sm|rkt|oak|scheme"],
+        Scrypt: ["scrypt"],
+        SCSS: ["scss"],
+        SH: ["sh|bash|^.bashrc"],
+        SJS: ["sjs"],
+        Slim: ["slim|skim"],
+        Smarty: ["smarty|tpl"],
+        Smithy: ["smithy"],
+        snippets: ["snippets"],
+        Soy_Template: ["soy"],
+        Space: ["space"],
+        SQL: ["sql"],
+        SQLServer: ["sqlserver"],
+        Stylus: ["styl|stylus"],
+        SVG: ["svg"],
+        Swift: ["swift"],
+        Tcl: ["tcl"],
+        Terraform: ["tf", "tfvars", "terragrunt"],
+        Tex: ["tex"],
+        Text: ["txt"],
+        Textile: ["textile"],
+        Toml: ["toml"],
+        TSX: ["tsx"],
+        Twig: ["twig|swig"],
+        Typescript: ["ts|typescript|str"],
+        Vala: ["vala"],
+        VBScript: ["vbs|vb"],
+        Velocity: ["vm"],
+        Verilog: ["v|vh|sv|svh"],
+        VHDL: ["vhd|vhdl"],
+        Visualforce: ["vfp|component|page"],
+        Wollok: ["wlk|wpgm|wtest"],
+        XML: ["xml|rdf|rss|wsdl|xslt|atom|mathml|mml|xul|xbl|xaml"],
+        XQuery: ["xq"],
+        YAML: ["yaml|yml"],
+        Zeek: ["zeek|bro"],
+        Django: ["html"]
+    };
+
+    var nameOverrides = {
+        ObjectiveC: "Objective-C",
+        CSharp: "C#",
+        golang: "Go",
+        C_Cpp: "C++",
+        c_Cpp: "C",
+        Csound_Document: "Csound Document",
+        Csound_Orchestra: "Csound",
+        Csound_Score: "Csound Score",
+        coffee: "CoffeeScript",
+        HTML_Ruby: "HTML (Ruby)",
+        HTML_Elixir: "HTML (Elixir)",
+        FTL: "FreeMarker",
+        PHP_Laravel_blade: "PHP (Blade Template)",
+        Perl6: "Perl 6",
+        AutoHotKey: "AutoHotkey / AutoIt"
+    };
+
+    var languageName = document.getElementById("languageName");
+    
+
+    var inforDislayName = {};
+    for (var name in supportedModes) {
+        var displayName = (nameOverrides[name] || name).replace(/_/g, " ");
+        var mode = name.toLowerCase();
+        inforDislayName[displayName] = mode;
+
+        var option = document.createElement("option");
+        option.value = displayName;
+        option.text = displayName;
+        languageName.add(option);
+    }
+    document.getElementById("languageMode").value = inforDislayName[languageName.value];
+
+
+
+    $(document).ready(function () {
+        $('.js-example-basic-single').change(function () {
+            var value = $(this).val();
+
+            $('#languageMode').val(inforDislayName[value]);
+
+
+        });
+    });
+
+
+</script>
+
+<script>
+    var currentLanguage = JSON.parse('@Html.Raw(Json.Serialize(ViewData["languageName"]))');
+    if (currentLanguage != null) {
+        languageName.value = currentLanguage;
+        document.getElementById("languageMode").value = inforDislayName[languageName.value];
+    }
+</script>
+<style>
+    .select2-selection__rendered {
+        line-height: 10px !important;
+    }
+</style>

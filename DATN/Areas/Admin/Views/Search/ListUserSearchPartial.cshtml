@@ -1,0 +1,56 @@
+﻿@model List<Account>
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @item.Email
+    </td>
+    <td>
+        @item.FullName
+    </td>
+    <td>
+        @item.Phone
+    </td>
+    @if (!item.Lock.Value == true)
+    {
+        <td>
+            <div class="form-check form-check-primary">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" checked="checked"> Active <i class="input-helper"></i>
+                </label>
+            </div>
+        </td>
+    }
+    else
+    {
+        <td>
+            <div class="form-check form-check-danger">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" checked=""> Blocked <i class="input-helper"></i>
+                </label>
+            </div>
+        </td>
+    }
+    @if (item.CreatedDate.HasValue)
+    {
+        <td>
+            @{DateTime date = item.CreatedDate.Value;
+                String year = date.ToString("dd/MM/yyyy");
+            }
+            @year
+        </td>
+    }
+    else
+    {
+        <td>@item.CreatedDate</td>
+    }
+    <td>
+        <a class="btn btn-inverse-success btn-md" asp-controller="UserAccounts" asp-action="Edit" asp-route-id="@item.AccountId">Edit</a> |
+        <a class="btn btn-inverse-info btn-md" asp-controller="UserAccounts" asp-action="Details" asp-route-id="@item.AccountId">Details</a> |
+        <a class="btn btn-inverse-danger btn-md" asp-controller="UserAccounts" asp-action="Blocked" asp-route-id="@item.AccountId">Blocked</a>
+    </td>
+</tr>
+    }
+}

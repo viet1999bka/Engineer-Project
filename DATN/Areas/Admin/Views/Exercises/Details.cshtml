@@ -1,0 +1,103 @@
+﻿@model DATN.Models.Exercise
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<h1>Chi tiết bài tập</h1>
+<br />
+@if (ViewBag.languageSupport != null)
+{
+    <h5>@ViewBag.languageSupport <a class="btn btn-primary" asp-action="Create" asp-route-ExerciseId="@Model.ExcerciseId"  asp-controller="LanguageSupports">Tạo mới</a></h5>
+    <br />
+}
+
+@if (ViewBag.testCase != null)
+{
+    <h5>@ViewBag.testCase <a class="btn btn-primary" asp-action="Create" asp-route-ExerciseId="@Model.ExcerciseId" asp-controller="TestCases">Tạo mới</a></h5>
+    <br />
+}
+
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div style="display:flex; flex-direction:row;">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label asp-for="ExcerciseName" class="col-sm-3 col-form-label">Tên bài tập</label>
+                            <div class="col-sm-9" style="text-align:center;">
+                                <p>@Model.ExcerciseName </p>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="ChallengeId" class="col-sm-3 col-form-label">Chủ đề</label>
+                            <div class="col-sm-9" style="text-align:center;">
+                                <p>@Model.Challenge.ChallengeName </p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="LevelId" class="col-sm-3 col-form-label">Độ khó</label>
+                            <div class="col-sm-9" style="text-align:center;">
+                                <p>@Model.Level.DifficultName </p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Description" class="col-sm-3 col-form-label">Đề bài</label>
+                            <div class="col-sm-9" style="text-align:center;">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">@Model.Description</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Example" class="col-sm-3 col-form-label">Mô tả dữ liệu vào ra</label>
+                            <div class="col-sm-9" style="text-align:center;">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">@Model.Example</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Input" class="col-sm-3 col-form-label">Mẫu đầu vào</label>
+                            <div class="col-sm-9" style="text-align:center;">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">@Model.Input</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Output" class="col-sm-3 col-form-label">Mẫu đầu ra</label>
+                            <div class="col-sm-9" style="text-align:center;">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">@Model.Output</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="TimeLimit" class="col-sm-3 col-form-label">Thời gian giới hạn</label>
+                            <div class="col-sm-9" style="text-align:center;">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">@Model.TimeLimit</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <a class="btn btn-outline-secondary btn-fw" asp-controller="TestCases" asp-action="Index" asp-route-ExerciseID="@Model.ExcerciseId">TestCase</a> |
+                <a class="btn btn-outline-light btn-fw" asp-controller="LanguageSupports" asp-action="Index"  asp-route-ExerciseID="@Model.ExcerciseId">Ngôn ngữ</a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div>
+    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.ExcerciseId">Edit</a> |
+    <a class="btn btn-warning" asp-action="Index">Back to List</a>
+</div>

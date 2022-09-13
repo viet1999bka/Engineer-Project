@@ -1,0 +1,389 @@
+.page__layout {
+    height: 100vh;
+    
+}
+
+.page__header {
+    background-color: #d8f8ff;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #E0E7FA;
+    padding: 10px 0;
+}
+
+.page__header-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-width: 0px 0px 1px 0px;
+    border-color: #E0E7FA;
+}
+
+.page__header-home {
+    font-size: 2.4rem;
+}
+
+.header__navbar-home-link {
+    text-decoration: none;
+    color: var(--white-color);
+    background-color: #004ae1;
+    display: block;
+    padding: 2px 5px;
+    border: 1px solid #004ae1;
+    border-radius: 10px;
+
+}
+
+.header__navbar-home-link:hover {
+    background-color: #fff;
+    color: #004ae1;
+    cursor: pointer;
+}
+
+.header__navbar-home-icon {
+    width: 30px;
+}
+
+.page__header-list {
+    display: flex;
+    margin: 0;
+}
+
+.page__header-item {
+    display: inline-block;
+    padding: 10px 10px;
+    margin: 2px 12px;
+    border-bottom: 2px solid #d8f8ff;
+    color: #2b3b52;
+    font-weight: 500;
+    font-size: 1.4rem;
+}
+
+.page__header-item:hover {
+    color: #000;
+    cursor: pointer;
+    border-bottom: 2px solid #000;
+    font-weight: 600;
+}
+
+.page__introduce {
+    background-color: #d8f8ff;
+    padding: 50px 30px;
+}
+
+.page__introduce-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.page__introduce-infor {
+    padding: 0 30px 50px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.page__introduce-title {
+    line-height: 20px;
+    color: var(--text-color);
+}
+
+.page__introduce-heading {
+    font-size: 4.8rem;
+    line-height: 60px;
+    font-weight: bold;
+}
+
+.page__introduce-details {
+    color: rgb(43, 59, 82);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.page__introduce-desc {
+    position: relative;
+}
+
+.page__introduce-img:first-child {
+    position: absolute;
+    z-index: 0;
+}
+
+.page__introduce-img:last-child {
+    display: block;
+    margin-top: 65px;
+}
+
+
+.page__interview-content {
+    display: flex;
+    padding: 50px 30px 0;
+    margin: 50px 0 40px 0;
+    background-image: url(https://codesignal.com/wp-content/uploads/2021/04/Rectangle-802.png);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: 96% auto;
+}
+
+.page__interview-infor {
+    width: 30%;
+    margin: 20px 80px;
+}
+
+.page__interview-header {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+}
+
+.page__interview-header i {
+    color: #42d6b2;
+    font-size: 4.1rem;
+    width: 80px;
+}
+
+.page__interview-header-title {
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 26px;
+}
+
+.page__interview-comment {
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.page__interview-infor  p{
+    margin: 0 0 21px 0;
+}
+
+.page__interview-infor  li {
+
+    color: #2b3b52;
+
+}
+
+.page__interview-desc img {
+    width: 500px;
+}
+
+.page__about {
+    background-color: #434c62;
+    
+
+}
+
+.page__about-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page__about-list{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+}
+
+.page__about-heading {
+    color: #8291a3;
+    font-size: 1.8rem;
+    padding-bottom: 15px;
+}
+
+.page__about-item {
+    color: #dce5ff;
+    font-size: 1.6rem;
+    padding-bottom: 10px;
+}
+
+.page__about-social {
+    padding-top: 10px;
+    font-size: 2rem;
+    
+}
+
+.page__about-link {
+    color: #dce5ff;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.page__footer {
+    background-color: rgb(56, 65, 87);
+}
+
+.page__footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    padding: 20px 0;
+}
+
+.page__footer-coppyright {
+    color: rgb(130, 145, 163);
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.page__footer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page__footer-item {
+    color: rgb(220, 229, 255);
+    font-size: 1.4rem;
+    line-height: 14px;
+    padding: 0 10px;
+    text-decoration: none;
+    border-right: 1px solid rgb(220, 229, 255);
+}
+
+.auth-form {
+    width: 500px;
+}
+
+.auth-form__login {
+    display: none;
+}
+
+.auth-form__register {
+    display: none;
+}
+
+.auth-form__container {
+    padding: 0 32px;
+
+}
+
+.auth-form__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.auth-form__heading {
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--text-color);
+
+}
+
+.auth-form__switch-btn {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: orangered;
+    cursor: pointer;
+}
+
+.auth-form__form {
+    margin-top: 16px;
+
+}
+
+.auth-form__input {
+    width: 100%;
+    height: 40px;
+    margin-top: 16px;
+    padding: 0 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    outline: none;
+}
+
+.auth-form__input:focus {
+    border-color: #888;
+}
+
+.auth-form__aside {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.auth-form__policy-text {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    display: inline;
+    text-align: center;
+}
+
+.auth-form__policy-link {
+    color: orangered;
+    text-decoration: none;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+}
+
+.auth-form__control {
+    margin-top: 80px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.auth-form__control-back{
+    margin-right: 8px;
+}
+
+.auth-form__social {
+    margin-top: 16px;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px;
+}
+
+.auth-form__social-icon {
+    font-size: 1.4rem;
+    color: var(--white-color);
+    width: 18px;
+    
+}
+
+.auth-form__social--facebook, 
+.auth-form__social--google {
+    text-decoration: none;
+    color: var(--white-color);
+    font-size: 1.4rem;
+}
+
+.auth-form__social--facebook {
+    background-color: #3a5a98;
+}
+
+.auth-form__social--google,
+.auth-form__social-icon--google {
+    color: var(--text-color);
+    background-color: #ccc;
+}
+
+.auth-form__help {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.auth-form__help--link {
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: var(--text-color);
+}
+
+.auth-form__help--forgot {
+    color: orangered;
+}
+
+.auth-form__help-sparate {
+    display: block;
+    border-left: 1px solid #EAEAEA;
+    height: 16px;
+    margin: 0 16px;
+}

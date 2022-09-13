@@ -1,0 +1,59 @@
+﻿@model IEnumerable<DATN.Models.Exercise>
+
+@{
+    ViewData["Title"] = "ListExercise";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<int?> lsExAns = ViewBag.lsExAns;
+}
+
+<div class="container">
+    <div class="exer-inside">
+        <div class="exer-body">
+            <div class="exer-list">
+                <div class="exer-item">
+                    <img class="exer-item__header" src="./images/challenges/logoEn.png">
+
+                    </img>
+                    <div class="exer-item__body">
+                        @if (Model != null)
+                        {
+                            int num = 0;
+                            @foreach (var item in Model)
+                            {
+                                num++;
+                                <a asp-action="CodePage" asp-route-exerciseId="@item.ExcerciseId" class="exer-item__task">
+                                    <div class="exer-item__task-wrapper">
+                                        <h2 class="exer-item__task-num">@num</h2>
+                                        <h3 class="exer-item__task-name">@item.ExcerciseName</h3>
+                                        <div class="exer-item__task-difficult">@item.Level.DifficultName</div>
+                                        @if(lsExAns != null)
+                                        {
+                                           @if(lsExAns.Find(t => t == item.ExcerciseId) != null)
+                                            {
+                                                <div class="exer-item__task-comtask">
+                                            <div class="exer-item__task-check">
+                                                <div class="exer-item__task-icon">
+                                                    <div class="exer-item__task-icon-content">
+                                                        <svg viewBox="0 0 24 24">
+                                                            <path d="M12 .3C5.55.3.3 5.56.3 12S5.56 23.7 12 23.7 23.7 18.44 23.7 12 18.44.3 12 .3zM9.66 17.85L3.82 12l1.65-1.65 4.2 4.2 8.86-8.88 1.65 1.66-10.52 10.5z"></path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            }
+                                        }
+                                    </div>
+                                </a>
+
+                            }
+
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
